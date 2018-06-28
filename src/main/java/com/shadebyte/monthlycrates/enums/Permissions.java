@@ -9,7 +9,11 @@ package com.shadebyte.monthlycrates.enums;
 public enum Permissions {
 
     BASE("MonthlyCrates"),
-    HELP_CMD(BASE.getNode() + ".cmd.help"),;
+    HELP_CMD(BASE.getNode() + ".cmd.help"),
+    CREATE_CMD(BASE.getNode() + ".cmd.create"),
+    REMOVE_CMD(BASE.getNode() + ".cmd.remove"),
+
+    ;
 
     private String node;
 

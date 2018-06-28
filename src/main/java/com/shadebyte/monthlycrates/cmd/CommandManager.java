@@ -1,7 +1,9 @@
 package com.shadebyte.monthlycrates.cmd;
 
 import com.shadebyte.monthlycrates.Core;
+import com.shadebyte.monthlycrates.cmd.subcmds.CreateCommand;
 import com.shadebyte.monthlycrates.cmd.subcmds.HelpCommand;
+import com.shadebyte.monthlycrates.cmd.subcmds.RemoveCommand;
 import com.shadebyte.monthlycrates.enums.Permissions;
 import com.shadebyte.monthlycrates.language.Lang;
 import com.shadebyte.monthlycrates.utils.Debugger;
@@ -37,6 +39,8 @@ public class CommandManager implements CommandExecutor {
         Core.getInstance().getCommand(main).setExecutor(this);
         //Add
         this.commands.add(new HelpCommand());
+        this.commands.add(new CreateCommand());
+        this.commands.add(new RemoveCommand());
     }
 
     @Override

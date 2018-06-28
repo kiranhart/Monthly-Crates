@@ -21,10 +21,19 @@ import java.util.List;
  */
 public class Crate {
 
+    private static Crate instance;
+
     private String node;
 
-    public Crate(String node) {
+    private Crate(String node) {
         this.node = node;
+    }
+
+    public static Crate getInstance(String node) {
+        if (instance == null) {
+            instance = new Crate(node);
+        }
+        return instance;
     }
 
     public boolean exist() {
@@ -61,6 +70,13 @@ public class Crate {
             Core.getCrates().getConfig().set("crates." + node.toLowerCase() + ".item.name", "&e&l" + node + " &6&l Crate");
             Core.getCrates().getConfig().set("crates." + node.toLowerCase() + ".item.material", "ENDER_CHEST:0");
             Core.getCrates().getConfig().set("crates." + node.toLowerCase() + ".item.lore", Arrays.asList("&7Temporary lore"));
+            Core.getCrates().saveConfig();
+        }
+    }
+
+    public void remove() {
+        if (exist()) {
+            Core.getCrates().getConfig().set("crates." + node.toLowerCase(), null);
             Core.getCrates().saveConfig();
         }
     }

@@ -1,7 +1,20 @@
 prefix = "&8[&eMCrates&8]"
 help = "&cPlease enter a subcommand (/monthlycrates help)"
 
+#Commands
+commands.create = "&e&lUsage&f: &7/MCrate create &c<name>"
+commands.remove = "&e&lUsage&f: &7/MCrate remove &c<name>"
+
 #Permissions
 nopermission = "&cYou do not have permission to use that command!"
 playersonly = "&cOnly players are allowed to use that command!"
 invalidsubcommand = "&cThat's an invalid subcommand!"
+
+#Crate
+crate.created = "&eYou successfully created a new crate named&f: &6{crate_name}"
+crate.removed = "&eYou successfully removed the crate named&f: &6{crate_name}"
+crate.give = ""
+crate.giveall = ""
+crate.saved = ""
+crate.exist = "&cA crate with that id/name already exist!"
+crate.missing = "&cCould not find any crate with that name/id!"
