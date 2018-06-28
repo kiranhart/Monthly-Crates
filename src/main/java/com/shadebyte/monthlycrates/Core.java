@@ -84,4 +84,11 @@ public final class Core extends JavaPlugin {
     public Settings getSettings() {
         return settings;
     }
+
+    /**
+     * @return command manager
+     */
+    public CommandManager getCommandManager() {
+        return commandManager;
+    }
 }

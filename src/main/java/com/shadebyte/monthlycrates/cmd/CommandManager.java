@@ -1,10 +1,10 @@
 package com.shadebyte.monthlycrates.cmd;
 
 import com.shadebyte.monthlycrates.Core;
+import com.shadebyte.monthlycrates.cmd.subcmds.HelpCommand;
 import com.shadebyte.monthlycrates.enums.Permissions;
 import com.shadebyte.monthlycrates.language.Lang;
 import com.shadebyte.monthlycrates.utils.Debugger;
-import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -36,6 +36,7 @@ public class CommandManager implements CommandExecutor {
     public void initialize() {
         Core.getInstance().getCommand(main).setExecutor(this);
         //Add
+        this.commands.add(new HelpCommand());
     }
 
     @Override
