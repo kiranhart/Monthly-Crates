@@ -1,11 +1,9 @@
 package com.shadebyte.monthlycrates;
 
+import com.shadebyte.monthlycrates.cmd.CommandManager;
+import com.shadebyte.monthlycrates.language.Locale;
 import com.shadebyte.monthlycrates.utils.ConfigWrapper;
 import org.bukkit.plugin.java.JavaPlugin;
-
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public final class Core extends JavaPlugin {
 
@@ -15,6 +13,15 @@ public final class Core extends JavaPlugin {
     //Configuration Files
     private static ConfigWrapper crates;
 
+    //Locale
+    private Locale locale;
+
+    //Settings
+    private Settings settings = null;
+
+    //Command Manager
+    private CommandManager commandManager;
+
     @Override
     public void onEnable() {
         // Plugin startup logic
@@ -22,6 +29,19 @@ public final class Core extends JavaPlugin {
         //Initialize the instance value to this class
         instance = this;
         initFiles();
+
+        getConfig().options().copyDefaults(true);
+        saveDefaultConfig();
+
+        //Locales
+        Locale.init(this);
+        Locale.saveDefaultLocale("en_US");
+        this.locale = Locale.getLocale(this.getConfig().getString("Locale", "en_US"));
+
+        settings = new Settings();
+        commandManager = new CommandManager();
+
+        commandManager.initialize();
     }
 
     @Override
@@ -32,7 +52,7 @@ public final class Core extends JavaPlugin {
         instance = null;
     }
 
-    private void initFiles () {
+    private void initFiles() {
         crates = new ConfigWrapper(this, "", "crates.yml");
         crates.saveConfig();
     }
@@ -51,7 +71,17 @@ public final class Core extends JavaPlugin {
         return crates;
     }
 
-    public static void main(String[] args) {
+    /**
+     * @return the Locale
+     */
+    public Locale getLocale() {
+        return locale;
+    }
 
+    /**
+     * @return settings
+     */
+    public Settings getSettings() {
+        return settings;
     }
 }

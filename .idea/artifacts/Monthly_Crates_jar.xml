@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Monthly Crates:jar">
+    <output-path>$USER_HOME$/Desktop/Plugin Testing/Pepper API/plugins</output-path>
+    <root id="archive" name="Monthly Crates.jar">
+      <element id="module-output" name="Monthly Crates" />
+    </root>
+  </artifact>
+</component>
