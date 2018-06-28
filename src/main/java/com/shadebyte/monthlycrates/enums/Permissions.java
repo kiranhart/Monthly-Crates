@@ -12,6 +12,7 @@ public enum Permissions {
     HELP_CMD(BASE.getNode() + ".cmd.help"),
     CREATE_CMD(BASE.getNode() + ".cmd.create"),
     REMOVE_CMD(BASE.getNode() + ".cmd.remove"),
+    EDIT_CMD(BASE.getNode() + ".cmd.edit"),
 
     ;
 

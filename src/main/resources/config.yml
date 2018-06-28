@@ -1,2 +1,36 @@
 #I suggest leaving this on to get a more detailed error report :)
 debugger: true
+
+guis:
+  edit:
+    title: "&E&LEditing &6{crate_name} &eCrate"
+    items:
+      normalpane:
+        item: "STAINED_GLASS_PANE:5"
+        name: "&b&lEdit Slot&F: &7#&e{normal_pane_number}"
+        lore:
+          - "&7Click this pane to begin editing the items"
+          - "&7that can be earned in the roulette this pane."
+      finalpane:
+        item: "STAINED_GLASS_PANE:5"
+        name: "&b&lEdit Final Reward Pane"
+        lore:
+          - "&7Click this pane to begin editing the items"
+          - "&7that can be earned in final pane roulette."
+      name:
+        item: "STAINED_GLASS_PANE:5"
+        name: "&b&lEdit Crate Title"
+        lore:
+          - "&7Click to change the editing crate's name."
+      item:
+        item: "STAINED_GLASS_PANE:5"
+        name: "&b&lEdit Crate Item"
+        lore:
+          - "&7Click to change the physical item that will"
+          - "&7be given as a crate for this crate."
+      animationtheme:
+        item: "STAINED_GLASS_PANE:5"
+        name: "&b&lEdit Crate Theme"
+        lore:
+          - "&7Click to change the animation theme of this"
+          - "&7crate (Color scheme during the animations)"

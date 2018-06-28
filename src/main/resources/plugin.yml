@@ -2,7 +2,7 @@ name: MonthlyCrates
 version: ${project.version}
 main: com.shadebyte.monthlycrates.Core
 authors: [TheCrystalStar]
-description: A high quality Monthly Crates pluign replica
+description: A high quality Monthly Crates pluign.
 website: https://www.shadebyte.com/
 
 commands:

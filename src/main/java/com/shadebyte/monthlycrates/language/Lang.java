@@ -13,6 +13,7 @@ public enum Lang {
 
     CREATE_COMMAND("commands.create"),
     REMOVE_COMMAND("commands.remove"),
+    EDIT_COMMAND("commands.edit"),
 
     NO_PERMISSION("nopermission"),
     PLAYERS_ONLY("playersonly"),

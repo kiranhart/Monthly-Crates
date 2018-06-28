@@ -2,7 +2,10 @@ package com.shadebyte.monthlycrates;
 
 import com.shadebyte.monthlycrates.cmd.CommandManager;
 import com.shadebyte.monthlycrates.language.Locale;
+import com.shadebyte.monthlycrates.listeners.MGUIListener;
 import com.shadebyte.monthlycrates.utils.ConfigWrapper;
+import org.bukkit.Bukkit;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class Core extends JavaPlugin {
@@ -38,6 +41,8 @@ public final class Core extends JavaPlugin {
         Locale.saveDefaultLocale("en_US");
         this.locale = Locale.getLocale(this.getConfig().getString("Locale", "en_US"));
 
+        initEvents();
+
         settings = new Settings();
         commandManager = new CommandManager();
 
@@ -55,6 +60,11 @@ public final class Core extends JavaPlugin {
     private void initFiles() {
         crates = new ConfigWrapper(this, "", "crates.yml");
         crates.saveConfig();
+    }
+
+    private void initEvents() {
+        PluginManager p = Bukkit.getPluginManager();
+        p.registerEvents(new MGUIListener(), this);
     }
 
     /**

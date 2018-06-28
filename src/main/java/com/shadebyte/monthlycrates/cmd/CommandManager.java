@@ -2,6 +2,7 @@ package com.shadebyte.monthlycrates.cmd;
 
 import com.shadebyte.monthlycrates.Core;
 import com.shadebyte.monthlycrates.cmd.subcmds.CreateCommand;
+import com.shadebyte.monthlycrates.cmd.subcmds.EditCommand;
 import com.shadebyte.monthlycrates.cmd.subcmds.HelpCommand;
 import com.shadebyte.monthlycrates.cmd.subcmds.RemoveCommand;
 import com.shadebyte.monthlycrates.enums.Permissions;
@@ -34,6 +35,7 @@ public class CommandManager implements CommandExecutor {
     public final String help = "help";
     public final String create = "create";
     public final String remove = "remove";
+    public final String edit = "edit";
 
     public void initialize() {
         Core.getInstance().getCommand(main).setExecutor(this);
@@ -41,6 +43,7 @@ public class CommandManager implements CommandExecutor {
         this.commands.add(new HelpCommand());
         this.commands.add(new CreateCommand());
         this.commands.add(new RemoveCommand());
+        this.commands.add(new EditCommand());
     }
 
     @Override

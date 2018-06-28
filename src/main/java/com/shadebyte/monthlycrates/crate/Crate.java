@@ -67,6 +67,7 @@ public class Crate {
 
     public void create() {
         if (!exist()) {
+            Core.getCrates().getConfig().set("crates." + node.toLowerCase() + ".name", node);
             Core.getCrates().getConfig().set("crates." + node.toLowerCase() + ".item.name", "&e&l" + node + " &6&l Crate");
             Core.getCrates().getConfig().set("crates." + node.toLowerCase() + ".item.material", "ENDER_CHEST:0");
             Core.getCrates().getConfig().set("crates." + node.toLowerCase() + ".item.lore", Arrays.asList("&7Temporary lore"));
