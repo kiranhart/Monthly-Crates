@@ -2,13 +2,21 @@ package com.shadebyte.monthlycrates;
 
 import com.shadebyte.monthlycrates.cmd.CommandManager;
 import com.shadebyte.monthlycrates.language.Locale;
+import com.shadebyte.monthlycrates.listeners.CrateEditListeners;
 import com.shadebyte.monthlycrates.listeners.MGUIListener;
+import com.shadebyte.monthlycrates.listeners.PlayerListeners;
 import com.shadebyte.monthlycrates.utils.ConfigWrapper;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.*;
+
 public final class Core extends JavaPlugin {
+
+    //Storage
+    public Map<UUID, String> editingCrate;
+    public List<UUID> editingTitle;
 
     //Instance variable.
     private static Core instance;
@@ -31,6 +39,10 @@ public final class Core extends JavaPlugin {
 
         //Initialize the instance value to this class
         instance = this;
+
+        editingCrate = new HashMap<>();
+        editingTitle = new ArrayList<>();
+
         initFiles();
 
         getConfig().options().copyDefaults(true);
@@ -47,6 +59,7 @@ public final class Core extends JavaPlugin {
         commandManager = new CommandManager();
 
         commandManager.initialize();
+        
     }
 
     @Override
@@ -65,6 +78,8 @@ public final class Core extends JavaPlugin {
     private void initEvents() {
         PluginManager p = Bukkit.getPluginManager();
         p.registerEvents(new MGUIListener(), this);
+        p.registerEvents(new CrateEditListeners(), this);
+        p.registerEvents(new PlayerListeners(), this);
     }
 
     /**

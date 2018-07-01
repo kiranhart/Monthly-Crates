@@ -4,17 +4,25 @@ help = "&cPlease enter a subcommand (/monthlycrates help)"
 #Commands
 commands.create = "&e&lUsage&f: &7/MCrate create &c<name>"
 commands.remove = "&e&lUsage&f: &7/MCrate remove &c<name>"
+commands.giveall = "&e&lUsage&f: &7/MCrate giveall &c<crate> <#>"
 
-#Permissions
+#Misc
 nopermission = "&cYou do not have permission to use that command!"
 playersonly = "&cOnly players are allowed to use that command!"
 invalidsubcommand = "&cThat's an invalid subcommand!"
+disabled = "&cFeatured disabled by resource author!"
+canceledit = "&CYou're no longer editing that crate!"
+notanumber = "&cThat isn't a whole number!"
+listing.found = "&eListing &b{amount} &ecrates from data file."
+listing.none = "&cThere are no monthly crates setup right now!"
 
 #Crate
 crate.created = "&eYou successfully created a new crate named&f: &6{crate_name}"
 crate.removed = "&eYou successfully removed the crate named&f: &6{crate_name}"
-crate.give = ""
-crate.giveall = ""
-crate.saved = ""
+crate.give = "&eYou gave &6{player} &f{amount} &b{crate_name} crate(s)."
+crate.giveall = "&eYou gave everyone &f{amount} &b{crate_name} crate(s)."
+crate.received = "&EYou received a crate from &b[player}"
+crate.saved = "&eSuccessfully saved that edit to the crate."
 crate.exist = "&cA crate with that id/name already exist!"
 crate.missing = "&cCould not find any crate with that name/id!"
+crate.edit.title = "&EPlease type the new name in chat type 'cance' to cancel."

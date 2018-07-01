@@ -1,7 +1,22 @@
 #I suggest leaving this on to get a more detailed error report :)
 debugger: true
 
+cancel-word: "cancel"
+
+#If false, only the person who bought or was given the crate through
+#command may open it, otherwise anyone can open it!
+allow-nonowner-to-open: true
+
 guis:
+  listing:
+    title: "&EListing all Crates"
+    border:
+      enabled: true
+      item:
+        item: "STAINED_GLASS_PANE:4"
+        name: "&6~"
+        lore:
+          - "&e*"
   edit:
     title: "&E&LEditing &6{crate_name} &eCrate"
     items:
@@ -18,18 +33,18 @@ guis:
           - "&7Click this pane to begin editing the items"
           - "&7that can be earned in final pane roulette."
       name:
-        item: "STAINED_GLASS_PANE:5"
+        item: "STAINED_GLASS_PANE:2"
         name: "&b&lEdit Crate Title"
         lore:
           - "&7Click to change the editing crate's name."
       item:
-        item: "STAINED_GLASS_PANE:5"
+        item: "STAINED_GLASS_PANE:2"
         name: "&b&lEdit Crate Item"
         lore:
           - "&7Click to change the physical item that will"
           - "&7be given as a crate for this crate."
       animationtheme:
-        item: "STAINED_GLASS_PANE:5"
+        item: "STAINED_GLASS_PANE:2"
         name: "&b&lEdit Crate Theme"
         lore:
           - "&7Click to change the animation theme of this"

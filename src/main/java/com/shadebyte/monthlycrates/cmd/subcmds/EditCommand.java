@@ -40,7 +40,12 @@ public class EditCommand extends SubCommand {
         if (args.length == 2) {
             String name = args[1].toLowerCase();
             if (Crate.getInstance(name).exist()) {
-                player.openInventory(CrateEditInventory.getInstance(name).getInventory());
+                if (Core.getInstance().editingCrate.containsKey(player.getUniqueId())) {
+                    Core.getInstance().editingCrate.remove(player.getUniqueId());
+                }
+
+                player.openInventory(CrateEditInventory.getInstance(name, player).getInventory());
+                Core.getInstance().editingCrate.put(player.getUniqueId(), name);
             }
         }
     }

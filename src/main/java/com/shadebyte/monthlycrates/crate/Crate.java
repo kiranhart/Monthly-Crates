@@ -5,6 +5,7 @@ import com.shadebyte.monthlycrates.utils.NBTEditor;
 import com.shadebyte.monthlycrates.utils.Serializer;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -48,16 +49,22 @@ public class Crate {
         return Core.getCrates().getConfig().getStringList("crates." + node.toLowerCase() + ".item.lore");
     }
 
-    public ItemStack getItemStack() {
+    public void setDisplayName(String name) {
+        Core.getCrates().getConfig().set("crates." + node.toLowerCase() + ".item.name", name);
+        Core.getCrates().saveConfig();
+    }
+
+    public ItemStack getItemStack(Player player) {
         String[] item = Core.getCrates().getConfig().getString("crates." + node.toLowerCase() + ".item.material").split(":");
         ItemStack stack = new ItemStack(Material.valueOf(item[0].toUpperCase()), 1, Short.parseShort(item[1]));
         ItemMeta meta = stack.getItemMeta();
-        meta.setDisplayName(getDisplayName());
+        meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', getDisplayName()));
         List<String> lore = new ArrayList<>();
-        getLore().forEach((element) -> lore.add(ChatColor.translateAlternateColorCodes('&', element)));
+        getLore().forEach((element) -> lore.add(ChatColor.translateAlternateColorCodes('&', element.replace("{player}", player.getName()))));
         meta.setLore(lore);
         stack.setItemMeta(meta);
         stack = NBTEditor.setItemTag(stack, node, "MCrate");
+        stack = NBTEditor.setItemTag(stack, player.getUniqueId().toString(), "MCrateOwner");
         return stack;
     }
 
@@ -68,9 +75,29 @@ public class Crate {
     public void create() {
         if (!exist()) {
             Core.getCrates().getConfig().set("crates." + node.toLowerCase() + ".name", node);
-            Core.getCrates().getConfig().set("crates." + node.toLowerCase() + ".item.name", "&e&l" + node + " &6&l Crate");
+            Core.getCrates().getConfig().set("crates." + node.toLowerCase() + ".item.name", "&6&l** &e&l" + node + " Crate &6&l**");
             Core.getCrates().getConfig().set("crates." + node.toLowerCase() + ".item.material", "ENDER_CHEST:0");
-            Core.getCrates().getConfig().set("crates." + node.toLowerCase() + ".item.lore", Arrays.asList("&7Temporary lore"));
+            Core.getCrates().getConfig().set("crates." + node.toLowerCase() + ".item.lore", Arrays.asList(
+                    "&eUnlocked at buy.example.com by &n{player}",
+                    "",
+                    "&f&l&nADMIN ITEMS",
+                    "&f&l* &fFirst Item",
+                    "&f&l* &fSecond Item",
+                    "&f&l* &fThird Item",
+                    "",
+                    "&E&l&nCOSMETIC ITEMS",
+                    "&E&l* &EFirst Item",
+                    "&E&l* &ESecond Item",
+                    "&E&l* &EThird Item",
+                    "",
+                    "&6&l&nENCHANTMENT ITEMS",
+                    "&6&l* &6First Item",
+                    "&6&l* &6Second Item",
+                    "&6&l* &6Third Item",
+                    "",
+                    "&c&l&nBONUS ITEMS",
+                    "&c&l* &cBonus One",
+                    "&c&l* &cBonus Two"));
             Core.getCrates().saveConfig();
         }
     }

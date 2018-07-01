@@ -1,6 +1,7 @@
 package com.shadebyte.monthlycrates.api;
 
 import com.shadebyte.monthlycrates.Core;
+import com.shadebyte.monthlycrates.utils.Debugger;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -43,5 +44,15 @@ public class CrateAPI {
 
     public ItemStack filler(int color) {
         return new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) color);
+    }
+
+    public boolean isInteger(String number) {
+        try {
+            Integer.parseInt(number);
+        } catch (NumberFormatException e) {
+            Debugger.report(e);
+            return false;
+        }
+        return true;
     }
 }

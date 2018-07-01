@@ -14,18 +14,26 @@ public enum Lang {
     CREATE_COMMAND("commands.create"),
     REMOVE_COMMAND("commands.remove"),
     EDIT_COMMAND("commands.edit"),
+    GIVEALL_COMMAND("commands.giveall"),
 
     NO_PERMISSION("nopermission"),
     PLAYERS_ONLY("playersonly"),
     INVALID_SUBCOMMAND("invalidsubcommand"),
+    DISABLED("disabled"),
+    EDIT_CANCEL("canceledit"),
+    NOT_A_NUMBER("notanumber"),
+    LISTING_FOUND("listing.found"),
+    LISTING_NONE("listing.none"),
 
     CRATE_CREATED("crate.created"),
     CRATE_REMOVED("crate.removed"),
     CRATE_SAVED("crate.saved"),
     CRATE_GIVE("crate.give"),
     CRATE_GIVEALL("crate.giveall"),
+    CRATE_RECEIVED("crate.received"),
     CRATE_EXIST("crate.exist"),
     CRATE_MISSING("crate.missing"),
+    CRATE_EDIT_TITLE("crate.edit.title"),
 
 
     ;

@@ -1,10 +1,7 @@
 package com.shadebyte.monthlycrates.cmd;
 
 import com.shadebyte.monthlycrates.Core;
-import com.shadebyte.monthlycrates.cmd.subcmds.CreateCommand;
-import com.shadebyte.monthlycrates.cmd.subcmds.EditCommand;
-import com.shadebyte.monthlycrates.cmd.subcmds.HelpCommand;
-import com.shadebyte.monthlycrates.cmd.subcmds.RemoveCommand;
+import com.shadebyte.monthlycrates.cmd.subcmds.*;
 import com.shadebyte.monthlycrates.enums.Permissions;
 import com.shadebyte.monthlycrates.language.Lang;
 import com.shadebyte.monthlycrates.utils.Debugger;
@@ -36,14 +33,18 @@ public class CommandManager implements CommandExecutor {
     public final String create = "create";
     public final String remove = "remove";
     public final String edit = "edit";
+    public final String list = "list";
+    public final String giveall = "giveall";
 
     public void initialize() {
         Core.getInstance().getCommand(main).setExecutor(this);
-        //Add
+
         this.commands.add(new HelpCommand());
         this.commands.add(new CreateCommand());
         this.commands.add(new RemoveCommand());
         this.commands.add(new EditCommand());
+        this.commands.add(new GiveallCommand());
+        this.commands.add(new ListCommand());
     }
 
     @Override
