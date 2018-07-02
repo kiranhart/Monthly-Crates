@@ -1,15 +1,14 @@
 package com.shadebyte.monthlycrates.cmd.subcmds;
 
 import com.shadebyte.monthlycrates.Core;
+import com.shadebyte.monthlycrates.api.enums.Permissions;
 import com.shadebyte.monthlycrates.cmd.SubCommand;
-import com.shadebyte.monthlycrates.enums.Permissions;
 import com.shadebyte.monthlycrates.inventory.inventories.CrateListInventory;
 import com.shadebyte.monthlycrates.language.Lang;
+import com.shadebyte.monthlycrates.utils.Debugger;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
-
-import static org.bukkit.ChatColor.translateAlternateColorCodes;
 
 /**
  * The current file has been created by Kiran Hart
@@ -33,15 +32,20 @@ public class ListCommand extends SubCommand {
         }
 
         Player p = (Player) sender;
-        ConfigurationSection section = Core.getCrates().getConfig().getConfigurationSection("crates");
 
-        if (section.getKeys(false).size() == 0 || section == null) {
-            p.sendMessage(Core.getInstance().getSettings().getPrefix() + Core.getInstance().getLocale().getMessage(Lang.LISTING_NONE.getNode()));
-            return;
+        try {
+            ConfigurationSection section = Core.getCrates().getConfig().getConfigurationSection("crates");
+
+            if (section.getKeys(false).size() == 0) {
+                p.sendMessage(Core.getInstance().getSettings().getPrefix() + Core.getInstance().getLocale().getMessage(Lang.LISTING_NONE.getNode()));
+                return;
+            }
+
+            p.sendMessage(Core.getInstance().getSettings().getPrefix() + Core.getInstance().getLocale().getMessage(Lang.LISTING_FOUND.getNode()).replace("{amount}", String.valueOf(section.getKeys(false).size())));
+            p.openInventory(CrateListInventory.getInstance(p).getInventory());
+        } catch (Exception e) {
+            Debugger.report(e);
         }
-
-        p.sendMessage(Core.getInstance().getSettings().getPrefix() + Core.getInstance().getLocale().getMessage(Lang.LISTING_FOUND.getNode()).replace("{amount}", String.valueOf(section.getKeys(false).size())));
-        p.openInventory(new CrateListInventory().getInventory());
     }
 
     @Override

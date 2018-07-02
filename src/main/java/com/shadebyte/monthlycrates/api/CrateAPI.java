@@ -1,9 +1,11 @@
 package com.shadebyte.monthlycrates.api;
 
 import com.shadebyte.monthlycrates.Core;
+import com.shadebyte.monthlycrates.crate.Crate;
 import com.shadebyte.monthlycrates.utils.Debugger;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -30,16 +32,34 @@ public class CrateAPI {
         return instance;
     }
 
-    public ItemStack createConfigItem(String node, int paneNumberOption) {
+    public ItemStack createConfigItem(String node, int paneNumberOption, int optionalPage) {
         String[] rawItem = Core.getInstance().getConfig().getString(node + ".item").split(":");
         ItemStack stack = new ItemStack(Material.valueOf(rawItem[0].toUpperCase()), 1, Short.parseShort(rawItem[1]));
         ItemMeta meta = stack.getItemMeta();
-        meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', Core.getInstance().getConfig().getString(node + ".name").replace("{normal_pane_number}", String.valueOf(paneNumberOption))));
+        meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', Core.getInstance().getConfig().getString(node + ".name").replace("{page}", String.valueOf(optionalPage)).replace("{normal_pane_number}", String.valueOf(paneNumberOption))));
         List<String> lore = new ArrayList<>();
         Core.getInstance().getConfig().getStringList(node + ".lore").forEach(s -> lore.add(ChatColor.translateAlternateColorCodes('&', s)));
         meta.setLore(lore);
         stack.setItemMeta(meta);
         return stack;
+    }
+
+    public List<ItemStack> getListOfCrates() {
+        List<ItemStack> stack = new ArrayList<>();
+        stack.add(Crate.getInstance("june").getItemStack());
+        return stack;
+    }
+
+    public List<ItemStack> fillerItems(int amount) {
+        List<ItemStack> list = new ArrayList<>();
+        for (int i = 0; i <= amount; i++) {
+            ItemStack stack = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) 1);
+            ItemMeta meta = stack.getItemMeta();
+            meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&6&l" + i));
+            stack.setItemMeta(meta);
+            list.add(stack);
+        }
+        return list;
     }
 
     public ItemStack filler(int color) {

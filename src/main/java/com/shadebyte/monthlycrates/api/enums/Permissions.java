@@ -1,4 +1,4 @@
-package com.shadebyte.monthlycrates.enums;
+package com.shadebyte.monthlycrates.api.enums;
 
 /**
  * The current file has been created by Kiran Hart

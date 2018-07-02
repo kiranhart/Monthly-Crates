@@ -8,6 +8,27 @@ cancel-word: "cancel"
 allow-nonowner-to-open: true
 
 guis:
+  crate:
+    title: "&6&l{crate_name}"
+    items:
+      normal:
+        item: "ENDER_CHEST:0"
+        name: "&7&l???"
+        lore:
+          - "&7Click to redeem an item"
+          - "&7from this monthly crate"
+      final-locked:
+        item: "STAINED_GLASS_PANE:14"
+        name: "&C&L???"
+        lore:
+          - "&7You can't open the final reward"
+          - "&7until you have redeemed all other rewards."
+      fill:
+        enabled: true
+        item: "STAINED_GLASS_PANE:8"
+        name: "&7&l???"
+        lore:
+          - "&7???"
   listing:
     title: "&EListing all Crates"
     border:
@@ -17,6 +38,22 @@ guis:
         name: "&6~"
         lore:
           - "&e*"
+    items:
+      currentpage:
+        item: "BOOK_AND_QUILL:0"
+        name: "&E&LCurrent Page&f: &b{page}"
+        lore:
+          - "&7--------------------"
+      nextpage:
+        item: "FEATHER:0"
+        name: "&e&l>> Next Page"
+        lore:
+          - "&7Go to next page if available"
+      previouspage:
+        item: "FEATHER:0"
+        name: "&e&lPrevious Page <<"
+        lore:
+          - "&7Go to previous page if available"
   edit:
     title: "&E&LEditing &6{crate_name} &eCrate"
     items:

@@ -1,6 +1,7 @@
 package com.shadebyte.monthlycrates.crate;
 
 import com.shadebyte.monthlycrates.Core;
+import com.shadebyte.monthlycrates.utils.Debugger;
 import com.shadebyte.monthlycrates.utils.NBTEditor;
 import com.shadebyte.monthlycrates.utils.Serializer;
 import org.bukkit.ChatColor;
@@ -68,8 +69,27 @@ public class Crate {
         return stack;
     }
 
+    public ItemStack getItemStack() {
+        String[] item = Core.getCrates().getConfig().getString("crates." + node.toLowerCase() + ".item.material").split(":");
+        ItemStack stack = new ItemStack(Material.valueOf(item[0].toUpperCase()), 1, Short.parseShort(item[1]));
+        ItemMeta meta = stack.getItemMeta();
+        meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', getDisplayName()));
+        List<String> lore = new ArrayList<>();
+        getLore().forEach((element) -> lore.add(ChatColor.translateAlternateColorCodes('&', element.replace("{player}", "A Player"))));
+        meta.setLore(lore);
+        stack.setItemMeta(meta);
+        stack = NBTEditor.setItemTag(stack, node, "MCrate");
+        return stack;
+    }
+
     public List<ItemStack> getPaneItems(CratePane pane) throws IOException {
-        return Serializer.getInstance().fromBase64(Core.getCrates().getConfig().getString("crates." + node.toLowerCase() + ".panes." + pane.getVal()));
+        List<ItemStack> contents = null;
+        try {
+            contents = Serializer.getInstance().fromBase64(Core.getCrates().getConfig().getString("crates." + node.toLowerCase() + ".panes." + pane.getVal()));
+        } catch (IOException e) {
+            Debugger.report(e);
+        }
+        return contents;
     }
 
     public void create() {
@@ -98,6 +118,9 @@ public class Crate {
                     "&c&l&nBONUS ITEMS",
                     "&c&l* &cBonus One",
                     "&c&l* &cBonus Two"));
+            for (CratePane cratePane : CratePane.values()) {
+                Core.getCrates().getConfig().set("crates." + node + ".panes." + cratePane.getVal(), Serializer.getInstance().toBase64(Arrays.asList(new ItemStack(Material.STAINED_GLASS_PANE, 1))));
+            }
             Core.getCrates().saveConfig();
         }
     }

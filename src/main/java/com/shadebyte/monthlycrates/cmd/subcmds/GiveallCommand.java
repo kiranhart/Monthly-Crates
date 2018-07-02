@@ -4,7 +4,7 @@ import com.shadebyte.monthlycrates.Core;
 import com.shadebyte.monthlycrates.api.CrateAPI;
 import com.shadebyte.monthlycrates.cmd.SubCommand;
 import com.shadebyte.monthlycrates.crate.Crate;
-import com.shadebyte.monthlycrates.enums.Permissions;
+import com.shadebyte.monthlycrates.api.enums.Permissions;
 import com.shadebyte.monthlycrates.language.Lang;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;

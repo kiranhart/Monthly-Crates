@@ -1,6 +1,7 @@
 package com.shadebyte.monthlycrates;
 
 import com.shadebyte.monthlycrates.cmd.CommandManager;
+import com.shadebyte.monthlycrates.crate.CratePane;
 import com.shadebyte.monthlycrates.language.Locale;
 import com.shadebyte.monthlycrates.listeners.CrateEditListeners;
 import com.shadebyte.monthlycrates.listeners.MGUIListener;
@@ -16,7 +17,9 @@ public final class Core extends JavaPlugin {
 
     //Storage
     public Map<UUID, String> editingCrate;
+    public Map<UUID, CratePane> editingCrateItems;
     public List<UUID> editingTitle;
+    public List<UUID> openingCrate;
 
     //Instance variable.
     private static Core instance;
@@ -41,7 +44,9 @@ public final class Core extends JavaPlugin {
         instance = this;
 
         editingCrate = new HashMap<>();
+        editingCrateItems = new HashMap<>();
         editingTitle = new ArrayList<>();
+        openingCrate = new ArrayList<>();
 
         initFiles();
 

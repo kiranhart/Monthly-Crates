@@ -1,9 +1,13 @@
 package com.shadebyte.monthlycrates.listeners;
 
 import com.shadebyte.monthlycrates.Core;
+import com.shadebyte.monthlycrates.inventory.inventories.CrateContentInventory;
+import com.shadebyte.monthlycrates.utils.NBTEditor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 /**
@@ -24,6 +28,18 @@ public class PlayerListeners implements Listener {
 
         if (Core.getInstance().editingCrate.containsKey(p.getUniqueId())) {
             Core.getInstance().editingCrate.remove(p.getUniqueId());
+        }
+    }
+
+    @EventHandler
+    public void onCrateAttemptOpen(PlayerInteractEvent e) {
+        Player p = e.getPlayer();
+        if (e.getAction() == Action.RIGHT_CLICK_AIR) {
+            if (NBTEditor.getItemTag(p.getItemInHand(), "MCrate") != null) {
+                String node = (String) NBTEditor.getItemTag(p.getItemInHand(), "MCrate");
+                p.openInventory(CrateContentInventory.getInstance(node).getInventory());
+                Core.getInstance().openingCrate.add(p.getUniqueId());
+            }
         }
     }
 }

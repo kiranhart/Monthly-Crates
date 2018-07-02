@@ -17,7 +17,7 @@ public enum CratePane {
     SEVEN("7"),
     EIGHT("8"),
     NINE("9"),
-    TEM("final");
+    TEN("10");
 
     private String val;
 
