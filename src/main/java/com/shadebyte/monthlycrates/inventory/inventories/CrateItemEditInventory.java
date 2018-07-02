@@ -3,6 +3,7 @@ package com.shadebyte.monthlycrates.inventory.inventories;
 import com.shadebyte.monthlycrates.Core;
 import com.shadebyte.monthlycrates.crate.Crate;
 import com.shadebyte.monthlycrates.inventory.MGUI;
+import com.shadebyte.monthlycrates.language.Lang;
 import com.shadebyte.monthlycrates.utils.Debugger;
 import com.shadebyte.monthlycrates.utils.Serializer;
 import org.bukkit.Bukkit;
@@ -66,6 +67,7 @@ public class CrateItemEditInventory implements MGUI {
 
         Core.getInstance().editingCrateItems.remove(p.getUniqueId());
         Core.getInstance().editingCrate.remove(p.getUniqueId());
+        e.getPlayer().sendMessage(Core.getInstance().getSettings().getPrefix() + Core.getInstance().getLocale().getMessage(Lang.CRATE_SAVED.getNode()));
     }
 
     @Override

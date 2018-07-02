@@ -6,6 +6,7 @@ import com.shadebyte.monthlycrates.api.task.SlotGridShuffleTask;
 import com.shadebyte.monthlycrates.crate.Crate;
 import com.shadebyte.monthlycrates.crate.CratePane;
 import com.shadebyte.monthlycrates.inventory.MGUI;
+import com.shadebyte.monthlycrates.language.Lang;
 import com.shadebyte.monthlycrates.utils.Debugger;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -82,7 +83,10 @@ public class CrateContentInventory implements MGUI {
     @Override
     public void close(InventoryCloseEvent e) {
         if (Core.getInstance().openingCrate.contains(e.getPlayer().getUniqueId())) {
-            Bukkit.getServer().getScheduler().runTaskLater(Core.getInstance(), () -> e.getPlayer().openInventory(e.getInventory()), 1);
+            Bukkit.getServer().getScheduler().runTaskLater(Core.getInstance(), () -> {
+                e.getPlayer().openInventory(e.getInventory());
+                e.getPlayer().sendMessage(Core.getInstance().getSettings().getPrefix() + Core.getInstance().getLocale().getMessage(Lang.CRATE_CANT_EXIT.getNode()));
+            }, 1);
         }
     }
 

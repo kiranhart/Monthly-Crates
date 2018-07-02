@@ -35,7 +35,7 @@ public class GiveallCommand extends SubCommand {
             if (!Crate.getInstance(name).exist()) {
                 sender.sendMessage(Core.getInstance().getSettings().getPrefix() + Core.getInstance().getLocale().getMessage(Lang.CRATE_MISSING.getNode()));
             } else {
-                sender.sendMessage(Core.getInstance().getSettings().getPrefix() + Core.getInstance().getLocale().getMessage(Lang.NO_PERMISSION.getNode()));
+                sender.sendMessage(Core.getInstance().getSettings().getPrefix() + Core.getInstance().getLocale().getMessage(Lang.GIVEALL_COMMAND.getNode()));
             }
         }
 

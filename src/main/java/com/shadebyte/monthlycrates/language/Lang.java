@@ -15,9 +15,11 @@ public enum Lang {
     REMOVE_COMMAND("commands.remove"),
     EDIT_COMMAND("commands.edit"),
     GIVEALL_COMMAND("commands.giveall"),
+    GIVE_COMMAND("commands.give"),
 
     NO_PERMISSION("nopermission"),
     PLAYERS_ONLY("playersonly"),
+    PLAYER_OFFLINE("playeroffline"),
     INVALID_SUBCOMMAND("invalidsubcommand"),
     DISABLED("disabled"),
     EDIT_CANCEL("canceledit"),
@@ -34,6 +36,7 @@ public enum Lang {
     CRATE_EXIST("crate.exist"),
     CRATE_MISSING("crate.missing"),
     CRATE_EDIT_TITLE("crate.edit.title"),
+    CRATE_CANT_EXIT("crate.cantexit"),
 
 
     ;

@@ -47,7 +47,7 @@ public class CrateEditInventory implements MGUI {
             return;
         }
 
-        if(slot == 21) {
+        if(slot == 21 || slot == 22) {
             player.closeInventory();
             Core.getInstance().editingTitle.add(player.getUniqueId());
             player.sendMessage(Core.getInstance().getSettings().getPrefix() + Core.getInstance().getLocale().getMessage(Lang.CRATE_EDIT_TITLE.getNode()));

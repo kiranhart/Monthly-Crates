@@ -35,6 +35,7 @@ public class CommandManager implements CommandExecutor {
     public final String edit = "edit";
     public final String list = "list";
     public final String giveall = "giveall";
+    public final String give = "give";
 
     public void initialize() {
         Core.getInstance().getCommand(main).setExecutor(this);
@@ -45,6 +46,7 @@ public class CommandManager implements CommandExecutor {
         this.commands.add(new EditCommand());
         this.commands.add(new GiveallCommand());
         this.commands.add(new ListCommand());
+        this.commands.add(new GiveCommand());
     }
 
     @Override

@@ -4,16 +4,11 @@ import com.shadebyte.monthlycrates.Core;
 import com.shadebyte.monthlycrates.api.CrateAPI;
 import com.shadebyte.monthlycrates.crate.Crate;
 import com.shadebyte.monthlycrates.crate.CratePane;
-import com.shadebyte.monthlycrates.utils.Debugger;
-import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
@@ -23,19 +18,6 @@ import java.util.concurrent.ThreadLocalRandom;
  * Usage of any code found within this class is prohibited unless given explicit permission otherwise.
  */
 public class SlotGridShuffleTask extends BukkitRunnable {
-
-    private static List<Material> stuff = new ArrayList<>();
-
-    static {
-        stuff.add(Material.APPLE);
-        stuff.add(Material.ARROW);
-        stuff.add(Material.GOLDEN_APPLE);
-        stuff.add(Material.BONE);
-        stuff.add(Material.BOWL);
-        stuff.add(Material.BOW);
-        stuff.add(Material.CARROT_ITEM);
-        stuff.add(Material.NETHER_STAR);
-    }
 
     private String crate;
     private Inventory inventory;
