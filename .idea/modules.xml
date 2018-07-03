@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Monthly Crates.iml" filepath="$PROJECT_DIR$/Monthly Crates.iml" />
+      <module fileurl="file://$PROJECT_DIR$/monthly-crates.iml" filepath="$PROJECT_DIR$/monthly-crates.iml" />
     </modules>
   </component>
 </project>

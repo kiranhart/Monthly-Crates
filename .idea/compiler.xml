@@ -6,11 +6,12 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="Monthly Crates" />
+        <module name="monthly-crates" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="Monthly Crates" target="1.8" />
+      <module name="monthly-crates" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
