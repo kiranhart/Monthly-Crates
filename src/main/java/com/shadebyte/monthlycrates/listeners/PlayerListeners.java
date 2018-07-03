@@ -57,14 +57,26 @@ public class PlayerListeners implements Listener {
                     if (p.getUniqueId().toString().equalsIgnoreCase(owner)) {
                         p.openInventory(CrateContentInventory.getInstance(node).getInventory());
                         Core.getInstance().openingCrate.add(p.getUniqueId());
+                        remove(p);
                     } else {
                         e.getPlayer().sendMessage(Core.getInstance().getSettings().getPrefix() + Core.getInstance().getLocale().getMessage(Lang.CRATE_CANT_OPEN.getNode()));
                     }
                 } else {
                     p.openInventory(CrateContentInventory.getInstance(node).getInventory());
                     Core.getInstance().openingCrate.add(p.getUniqueId());
+                    remove(p);
                 }
             }
+        }
+    }
+
+    private void remove(Player p) {
+        if (p.getItemInHand().getAmount() >= 2) {
+            p.getItemInHand().setAmount(p.getItemInHand().getAmount() - 1);
+            p.updateInventory();
+        } else {
+            p.setItemInHand(null);
+            p.updateInventory();
         }
     }
 }

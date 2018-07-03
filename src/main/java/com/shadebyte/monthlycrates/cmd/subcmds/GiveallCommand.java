@@ -46,7 +46,9 @@ public class GiveallCommand extends SubCommand {
             } else {
                 if (CrateAPI.getInstance().isInteger(args[2])) {
                     Bukkit.getOnlinePlayers().forEach(p -> {
-                        p.getInventory().addItem(Crate.getInstance(args[1].toLowerCase()).getItemStack(p));
+                        for (int i = 0; i < Integer.parseInt(args[2]); i++) {
+                            p.getInventory().addItem(Crate.getInstance(args[1].toLowerCase()).getItemStack(p));
+                        }
                         p.sendMessage(Core.getInstance().getSettings().getPrefix() + Core.getInstance().getLocale().getMessage(Lang.CRATE_RECEIVED.getNode()).replace("{player}", sender.getName()));
                     });
                     sender.sendMessage(Core.getInstance().getSettings().getPrefix() + Core.getInstance().getLocale().getMessage(Lang.CRATE_GIVEALL.getNode()).replace("{crate_name}", args[1]).replace("{amount}", args[2]));

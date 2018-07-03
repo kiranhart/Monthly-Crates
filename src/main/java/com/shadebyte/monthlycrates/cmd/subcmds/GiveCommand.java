@@ -59,7 +59,9 @@ public class GiveCommand extends SubCommand {
                 Player target = Bukkit.getPlayerExact(args[2]);
                 if (target != null) {
                     if (CrateAPI.getInstance().isInteger(args[3])) {
-                        target.getInventory().addItem(Crate.getInstance(args[1].toLowerCase()).getItemStack(target));
+                        for (int i = 0; i < Integer.parseInt(args[3]); i++) {
+                            target.getInventory().addItem(Crate.getInstance(args[1].toLowerCase()).getItemStack(target));
+                        }
                         target.sendMessage(Core.getInstance().getSettings().getPrefix() + Core.getInstance().getLocale().getMessage(Lang.CRATE_RECEIVED.getNode()).replace("{player}", sender.getName()));
                         sender.sendMessage(Core.getInstance().getSettings().getPrefix() + Core.getInstance().getLocale().getMessage(Lang.CRATE_GIVE.getNode()).replace("{crate_name}", args[1]).replace("{amount}", args[3]).replace("{player}", target.getName()));
                     } else {
