@@ -4,6 +4,7 @@ import com.shadebyte.monthlycrates.Core;
 import com.shadebyte.monthlycrates.api.CrateAPI;
 import com.shadebyte.monthlycrates.crate.Crate;
 import com.shadebyte.monthlycrates.crate.CratePane;
+import com.shadebyte.monthlycrates.utils.Debugger;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -71,8 +72,8 @@ public class SlotGridShuffleTask extends BukkitRunnable {
 
         try {
             inventory.setItem(clickedSlot, Crate.getInstance(crate).getPaneItems(pane).get(ThreadLocalRandom.current().nextInt(Crate.getInstance(crate).getPaneItems(pane).size())));
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            Debugger.report(e);
         }
 
         if (timer >= endTimer) {

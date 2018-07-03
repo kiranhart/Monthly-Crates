@@ -6,6 +6,7 @@ import com.shadebyte.monthlycrates.utils.Debugger;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
@@ -73,5 +74,15 @@ public class CrateAPI {
             return false;
         }
         return true;
+    }
+
+    public int availableSlots(PlayerInventory inventory) {
+        int count = 0;
+        for (ItemStack i : inventory) {
+            if (i == null) {
+                count++;
+            }
+        }
+        return count;
     }
 }

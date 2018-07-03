@@ -42,34 +42,32 @@ public class GiveCommand extends SubCommand {
         if (args.length == 3) {
             if (!Crate.getInstance(args[1].toLowerCase()).exist()) {
                 sender.sendMessage(Core.getInstance().getSettings().getPrefix() + Core.getInstance().getLocale().getMessage(Lang.CRATE_MISSING.getNode()));
+            } else {
                 Player target = Bukkit.getPlayerExact(args[2]);
                 if (target != null) {
                     sender.sendMessage(Core.getInstance().getSettings().getPrefix() + Core.getInstance().getLocale().getMessage(Lang.GIVE_COMMAND.getNode()));
                 } else {
                     sender.sendMessage(Core.getInstance().getSettings().getPrefix() + Core.getInstance().getLocale().getMessage(Lang.PLAYER_OFFLINE.getNode()));
                 }
-            } else {
-                sender.sendMessage(Core.getInstance().getSettings().getPrefix() + Core.getInstance().getLocale().getMessage(Lang.GIVE_COMMAND.getNode()));
             }
         }
 
-        if (args.length == 3) {
+        if (args.length == 4) {
             if (!Crate.getInstance(args[1].toLowerCase()).exist()) {
                 sender.sendMessage(Core.getInstance().getSettings().getPrefix() + Core.getInstance().getLocale().getMessage(Lang.CRATE_MISSING.getNode()));
+            } else {
                 Player target = Bukkit.getPlayerExact(args[2]);
                 if (target != null) {
                     if (CrateAPI.getInstance().isInteger(args[3])) {
                         target.getInventory().addItem(Crate.getInstance(args[1].toLowerCase()).getItemStack(target));
-                        target.sendMessage(Core.getInstance().getSettings().getPrefix() + Core.getInstance().getLocale().getMessage(Lang.CRATE_RECEIVED.getNode().replace("{player}", sender.getName())));
-                        sender.sendMessage(Core.getInstance().getSettings().getPrefix() + Core.getInstance().getLocale().getMessage(Lang.CRATE_GIVE.getNode().replace("{crate_name}", args[1]).replace("{amount}", args[3]).replace("{player}", target.getName())));
+                        target.sendMessage(Core.getInstance().getSettings().getPrefix() + Core.getInstance().getLocale().getMessage(Lang.CRATE_RECEIVED.getNode()).replace("{player}", sender.getName()));
+                        sender.sendMessage(Core.getInstance().getSettings().getPrefix() + Core.getInstance().getLocale().getMessage(Lang.CRATE_GIVE.getNode()).replace("{crate_name}", args[1]).replace("{amount}", args[3]).replace("{player}", target.getName()));
                     } else {
                         sender.sendMessage(Core.getInstance().getSettings().getPrefix() + Core.getInstance().getLocale().getMessage(Lang.NOT_A_NUMBER.getNode()));
                     }
                 } else {
                     sender.sendMessage(Core.getInstance().getSettings().getPrefix() + Core.getInstance().getLocale().getMessage(Lang.PLAYER_OFFLINE.getNode()));
                 }
-            } else {
-                sender.sendMessage(Core.getInstance().getSettings().getPrefix() + Core.getInstance().getLocale().getMessage(Lang.GIVE_COMMAND.getNode()));
             }
         }
     }

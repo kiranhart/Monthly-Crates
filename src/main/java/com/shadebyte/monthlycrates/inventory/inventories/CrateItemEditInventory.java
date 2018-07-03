@@ -77,7 +77,7 @@ public class CrateItemEditInventory implements MGUI {
         try {
             List<ItemStack> contents = Crate.getInstance(crate).getPaneItems(Core.getInstance().editingCrateItems.get(p.getUniqueId()));
             contents.forEach(all -> inventory.addItem(all));
-        } catch (IOException e) {
+        } catch (Exception e) {
             Debugger.report(e);
         }
 

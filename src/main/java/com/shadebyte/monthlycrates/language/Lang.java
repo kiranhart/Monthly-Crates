@@ -37,6 +37,7 @@ public enum Lang {
     CRATE_MISSING("crate.missing"),
     CRATE_EDIT_TITLE("crate.edit.title"),
     CRATE_CANT_EXIT("crate.cantexit"),
+    CRATE_CANT_OPEN("crate.cantopen"),
 
 
     ;

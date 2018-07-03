@@ -16,7 +16,6 @@ import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -55,26 +54,26 @@ public class CrateContentInventory implements MGUI {
         if (slot == 12 && clicked.isSimilar(CrateAPI.getInstance().createConfigItem("guis.crate.items.normal", 0, 0)))
             new SlotGridShuffleTask(crateName, e.getClickedInventory(), slotAnimationSlots[0], 12, 25).runTaskTimer(Core.getInstance(), 0, 4);
         if (slot == 13 && clicked.isSimilar(CrateAPI.getInstance().createConfigItem("guis.crate.items.normal", 0, 0)))
-            new SlotGridShuffleTask(crateName, e.getClickedInventory(), slotAnimationSlots[1], 13,25).runTaskTimer(Core.getInstance(), 0, 4);
+            new SlotGridShuffleTask(crateName, e.getClickedInventory(), slotAnimationSlots[1], 13, 25).runTaskTimer(Core.getInstance(), 0, 4);
         if (slot == 14 && clicked.isSimilar(CrateAPI.getInstance().createConfigItem("guis.crate.items.normal", 0, 0)))
-            new SlotGridShuffleTask(crateName, e.getClickedInventory(), slotAnimationSlots[2], 14,25).runTaskTimer(Core.getInstance(), 0, 4);
+            new SlotGridShuffleTask(crateName, e.getClickedInventory(), slotAnimationSlots[2], 14, 25).runTaskTimer(Core.getInstance(), 0, 4);
         if (slot == 21 && clicked.isSimilar(CrateAPI.getInstance().createConfigItem("guis.crate.items.normal", 0, 0)))
-            new SlotGridShuffleTask(crateName, e.getClickedInventory(), slotAnimationSlots[3], 21,25).runTaskTimer(Core.getInstance(), 0, 4);
+            new SlotGridShuffleTask(crateName, e.getClickedInventory(), slotAnimationSlots[3], 21, 25).runTaskTimer(Core.getInstance(), 0, 4);
         if (slot == 22 && clicked.isSimilar(CrateAPI.getInstance().createConfigItem("guis.crate.items.normal", 0, 0)))
-            new SlotGridShuffleTask(crateName, e.getClickedInventory(), slotAnimationSlots[4], 22,25).runTaskTimer(Core.getInstance(), 0, 4);
+            new SlotGridShuffleTask(crateName, e.getClickedInventory(), slotAnimationSlots[4], 22, 25).runTaskTimer(Core.getInstance(), 0, 4);
         if (slot == 23 && clicked.isSimilar(CrateAPI.getInstance().createConfigItem("guis.crate.items.normal", 0, 0)))
-            new SlotGridShuffleTask(crateName, e.getClickedInventory(), slotAnimationSlots[5], 23,25).runTaskTimer(Core.getInstance(), 0, 4);
+            new SlotGridShuffleTask(crateName, e.getClickedInventory(), slotAnimationSlots[5], 23, 25).runTaskTimer(Core.getInstance(), 0, 4);
         if (slot == 30 && clicked.isSimilar(CrateAPI.getInstance().createConfigItem("guis.crate.items.normal", 0, 0)))
-            new SlotGridShuffleTask(crateName, e.getClickedInventory(), slotAnimationSlots[6], 30,25).runTaskTimer(Core.getInstance(), 0, 4);
+            new SlotGridShuffleTask(crateName, e.getClickedInventory(), slotAnimationSlots[6], 30, 25).runTaskTimer(Core.getInstance(), 0, 4);
         if (slot == 31 && clicked.isSimilar(CrateAPI.getInstance().createConfigItem("guis.crate.items.normal", 0, 0)))
-            new SlotGridShuffleTask(crateName, e.getClickedInventory(), slotAnimationSlots[7], 31,25).runTaskTimer(Core.getInstance(), 0, 4);
+            new SlotGridShuffleTask(crateName, e.getClickedInventory(), slotAnimationSlots[7], 31, 25).runTaskTimer(Core.getInstance(), 0, 4);
         if (slot == 32 && clicked.isSimilar(CrateAPI.getInstance().createConfigItem("guis.crate.items.normal", 0, 0)))
-            new SlotGridShuffleTask(crateName, e.getClickedInventory(), slotAnimationSlots[8], 32,25).runTaskTimer(Core.getInstance(), 0, 4);
+            new SlotGridShuffleTask(crateName, e.getClickedInventory(), slotAnimationSlots[8], 32, 25).runTaskTimer(Core.getInstance(), 0, 4);
         if (slot == 49 && clicked.isSimilar(CrateAPI.getInstance().createConfigItem("guis.crate.items.normal", 0, 0))) {
             Core.getInstance().openingCrate.remove(e.getWhoClicked().getUniqueId());
             try {
                 e.getInventory().setItem(49, Crate.getInstance(crateName).getPaneItems(CratePane.TEN).get(ThreadLocalRandom.current().nextInt(Crate.getInstance(crateName).getPaneItems(CratePane.TEN).size())));
-            } catch (IOException e1) {
+            } catch (Exception e1) {
                 Debugger.report(e1);
             }
         }
@@ -87,6 +86,14 @@ public class CrateContentInventory implements MGUI {
                 e.getPlayer().openInventory(e.getInventory());
                 e.getPlayer().sendMessage(Core.getInstance().getSettings().getPrefix() + Core.getInstance().getLocale().getMessage(Lang.CRATE_CANT_EXIT.getNode()));
             }, 1);
+        } else {
+            if (CrateAPI.getInstance().availableSlots(e.getPlayer().getInventory()) < 10) {
+                Arrays.stream(normalItemSlots).forEach(slot -> e.getPlayer().getWorld().dropItemNaturally(e.getPlayer().getLocation(), e.getInventory().getItem(slot)));
+                e.getPlayer().getWorld().dropItemNaturally(e.getPlayer().getLocation(), e.getInventory().getItem(49));
+            } else {
+                Arrays.stream(normalItemSlots).forEach(slot -> e.getPlayer().getInventory().addItem(e.getInventory().getItem(slot)));
+                e.getPlayer().getInventory().addItem(e.getInventory().getItem(49));
+            }
         }
     }
 

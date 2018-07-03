@@ -1,5 +1,6 @@
 package com.shadebyte.monthlycrates;
 
+import com.shadebyte.monthlycrates.api.enums.Permissions;
 import com.shadebyte.monthlycrates.cmd.CommandManager;
 import com.shadebyte.monthlycrates.crate.CratePane;
 import com.shadebyte.monthlycrates.language.Locale;

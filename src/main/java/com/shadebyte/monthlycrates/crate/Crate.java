@@ -82,7 +82,7 @@ public class Crate {
         return stack;
     }
 
-    public List<ItemStack> getPaneItems(CratePane pane) throws IOException {
+    public List<ItemStack> getPaneItems(CratePane pane) {
         List<ItemStack> contents = null;
         try {
             contents = Serializer.getInstance().fromBase64(Core.getCrates().getConfig().getString("crates." + node.toLowerCase() + ".panes." + pane.getVal()));
