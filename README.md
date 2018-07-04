@@ -13,6 +13,7 @@ MonthlyCrates.cmd.edit
 MonthlyCrates.cmd.give
 MonthlyCrates.cmd.giveall
 MonthlyCrates.cmd.list
+MonthlyCrates.admin
 ```
 ## Commands 
   - /MonthlyCrates create <crate name>
@@ -20,6 +21,7 @@ MonthlyCrates.cmd.list
   - /MonthlyCrates edit <crate name>
   - /MonthlyCrates give <crate> <player> <#>
   - /MonthlyCrates giveall <crate> <#>
+  - /MonthlyCrates list
 
 ## config.yml
 ```yaml
