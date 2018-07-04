@@ -26,53 +26,42 @@ public class CrateEditListeners implements Listener {
 
             Player p = e.getPlayer();
 
-            if (!Core.getInstance().editingCrate.containsKey(p.getUniqueId()) && !Core.getInstance().editingTitle.contains(p.getUniqueId())) {
+            if (Core.getInstance().editingCrate.containsKey(p.getUniqueId()) && Core.getInstance().editingTitle.contains(p.getUniqueId())) {
+                String msg = e.getMessage();
+                e.setCancelled(true);
+
+                if (msg.equalsIgnoreCase(Core.getInstance().getConfig().getString("cancel-word"))) {
+                    Core.getInstance().editingCrate.remove(p.getUniqueId());
+                    Core.getInstance().editingTitle.remove(p.getUniqueId());
+                    p.sendMessage(Core.getInstance().getSettings().getPrefix() + Core.getInstance().getLocale().getMessage(Lang.EDIT_CANCEL.getNode()));
+                } else {
+                    Crate.getInstance(Core.getInstance().editingCrate.get(p.getUniqueId())).setDisplayName(msg);
+                    Core.getInstance().editingCrate.remove(p.getUniqueId());
+                    Core.getInstance().editingTitle.remove(p.getUniqueId());
+                    p.sendMessage(Core.getInstance().getSettings().getPrefix() + Core.getInstance().getLocale().getMessage(Lang.CRATE_SAVED.getNode()));
+                }
                 return;
             }
 
-            String msg = e.getMessage();
-
-            if (msg.equalsIgnoreCase(Core.getInstance().getConfig().getString("cancel-word"))) {
-                Core.getInstance().editingCrate.remove(p.getUniqueId());
-                Core.getInstance().editingTitle.remove(p.getUniqueId());
-                p.sendMessage(Core.getInstance().getSettings().getPrefix() + Core.getInstance().getLocale().getMessage(Lang.EDIT_CANCEL.getNode()));
-            } else {
-                Crate.getInstance(Core.getInstance().editingCrate.get(p.getUniqueId())).setDisplayName(msg);
-                Core.getInstance().editingCrate.remove(p.getUniqueId());
-                Core.getInstance().editingTitle.remove(p.getUniqueId());
-                p.sendMessage(Core.getInstance().getSettings().getPrefix() + Core.getInstance().getLocale().getMessage(Lang.CRATE_SAVED.getNode()));
+            if (Core.getInstance().editingCrate.containsKey(p.getUniqueId()) && Core.getInstance().editingStack.contains(p.getUniqueId())) {
+                String msg = e.getMessage();
                 e.setCancelled(true);
+
+                if (msg.equalsIgnoreCase(Core.getInstance().getConfig().getString("cancel-word"))) {
+                    Core.getInstance().editingCrate.remove(p.getUniqueId());
+                    Core.getInstance().editingStack.remove(p.getUniqueId());
+                    p.sendMessage(Core.getInstance().getSettings().getPrefix() + Core.getInstance().getLocale().getMessage(Lang.EDIT_CANCEL.getNode()));
+                } else {
+                    Crate.getInstance(Core.getInstance().editingCrate.get(p.getUniqueId())).setItemName(msg);
+                    Core.getInstance().editingCrate.remove(p.getUniqueId());
+                    Core.getInstance().editingStack.remove(p.getUniqueId());
+                    p.sendMessage(Core.getInstance().getSettings().getPrefix() + Core.getInstance().getLocale().getMessage(Lang.CRATE_SAVED.getNode()));
+                }
             }
+
         } catch (Exception ex) {
             Debugger.report(ex);
         }
     }
 
-    @EventHandler
-    public void onCrateStackTitleEdit(AsyncPlayerChatEvent e) {
-        try {
-
-            Player p = e.getPlayer();
-
-            if (!Core.getInstance().editingCrate.containsKey(p.getUniqueId()) && !Core.getInstance().editingStack.contains(p.getUniqueId())) {
-                return;
-            }
-
-            String msg = e.getMessage();
-
-            if (msg.equalsIgnoreCase(Core.getInstance().getConfig().getString("cancel-word"))) {
-                Core.getInstance().editingCrate.remove(p.getUniqueId());
-                Core.getInstance().editingStack.remove(p.getUniqueId());
-                p.sendMessage(Core.getInstance().getSettings().getPrefix() + Core.getInstance().getLocale().getMessage(Lang.EDIT_CANCEL.getNode()));
-            } else {
-                Crate.getInstance(Core.getInstance().editingCrate.get(p.getUniqueId())).setName(msg);
-                Core.getInstance().editingCrate.remove(p.getUniqueId());
-                Core.getInstance().editingStack.remove(p.getUniqueId());
-                p.sendMessage(Core.getInstance().getSettings().getPrefix() + Core.getInstance().getLocale().getMessage(Lang.CRATE_SAVED.getNode()));
-                e.setCancelled(true);
-            }
-        } catch (Exception ex) {
-            Debugger.report(ex);
-        }
-    }
 }

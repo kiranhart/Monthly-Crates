@@ -99,7 +99,7 @@ public class CrateContentInventory implements MGUI {
 
     @Override
     public Inventory getInventory() {
-        Inventory inventory = Bukkit.createInventory(this, 54, ChatColor.translateAlternateColorCodes('&', Core.getInstance().getConfig().getString("guis.crate.title").replace("{crate_name}", crateName)));
+        Inventory inventory = Bukkit.createInventory(this, 54, ChatColor.translateAlternateColorCodes('&', Core.getInstance().getConfig().getString("guis.crate.title").replace("{crate_name}", Crate.getInstance(crateName).getDisplayName())));
         if (Core.getInstance().getConfig().getBoolean("guis.crate.items.fill.enabled"))
             for (int i = 0; i < inventory.getSize(); i++)
                 inventory.setItem(i, CrateAPI.getInstance().createConfigItem("guis.crate.items.fill", 0, 0));

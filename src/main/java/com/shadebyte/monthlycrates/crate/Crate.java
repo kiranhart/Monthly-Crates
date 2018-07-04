@@ -40,6 +40,10 @@ public class Crate {
     }
 
     public String getDisplayName() {
+        return Core.getCrates().getConfig().getString("crates." + node.toLowerCase() + ".name");
+    }
+
+    public String getItemName() {
         return Core.getCrates().getConfig().getString("crates." + node.toLowerCase() + ".item.name");
     }
 
@@ -52,7 +56,7 @@ public class Crate {
         Core.getCrates().saveConfig();
     }
 
-    public void setName(String name) {
+    public void setItemName(String name) {
         Core.getCrates().getConfig().set("crates." + node.toLowerCase() + ".item.name", name);
         Core.getCrates().saveConfig();
     }
@@ -61,7 +65,7 @@ public class Crate {
         String[] item = Core.getCrates().getConfig().getString("crates." + node.toLowerCase() + ".item.material").split(":");
         ItemStack stack = new ItemStack(Material.valueOf(item[0].toUpperCase()), 1, Short.parseShort(item[1]));
         ItemMeta meta = stack.getItemMeta();
-        meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', getDisplayName()));
+        meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', getItemName()));
         List<String> lore = new ArrayList<>();
         getLore().forEach((element) -> lore.add(ChatColor.translateAlternateColorCodes('&', element.replace("{player}", player.getName()))));
         meta.setLore(lore);
@@ -75,7 +79,7 @@ public class Crate {
         String[] item = Core.getCrates().getConfig().getString("crates." + node.toLowerCase() + ".item.material").split(":");
         ItemStack stack = new ItemStack(Material.valueOf(item[0].toUpperCase()), 1, Short.parseShort(item[1]));
         ItemMeta meta = stack.getItemMeta();
-        meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', getDisplayName()));
+        meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', getItemName()));
         List<String> lore = new ArrayList<>();
         getLore().forEach((element) -> lore.add(ChatColor.translateAlternateColorCodes('&', element.replace("{player}", "A Player"))));
         meta.setLore(lore);
