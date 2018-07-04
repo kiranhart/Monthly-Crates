@@ -53,15 +53,17 @@ public class CrateEditInventory implements MGUI {
             return;
         }
 
-        if (clicked.isSimilar(CrateAPI.getInstance().createConfigItem("guis.edit.items.item", 0, 0))) {
-            e.getWhoClicked().sendMessage(Core.getInstance().getSettings().getPrefix() + Core.getInstance().getLocale().getMessage(Lang.DISABLED.getNode()));
-            return;
-        }
-
         if (slot == 21) {
             player.closeInventory();
             Core.getInstance().editingTitle.add(player.getUniqueId());
             player.sendMessage(Core.getInstance().getSettings().getPrefix() + Core.getInstance().getLocale().getMessage(Lang.CRATE_EDIT_TITLE.getNode()));
+            return;
+        }
+
+        if (slot == 22) {
+            player.closeInventory();
+            Core.getInstance().editingStack.add(player.getUniqueId());
+            player.sendMessage(Core.getInstance().getSettings().getPrefix() + Core.getInstance().getLocale().getMessage(Lang.CRATE_EDIT_STACK_TITLE.getNode()));
             return;
         }
 
@@ -148,7 +150,7 @@ public class CrateEditInventory implements MGUI {
         //Items
         inventory.setItem(13, Crate.getInstance(name).getItemStack(player));
         inventory.setItem(21, CrateAPI.getInstance().createConfigItem("guis.edit.items.name", 0, 0));
-        inventory.setItem(22, CrateAPI.getInstance().createConfigItem("guis.edit.items.item", 0, 0));
+        inventory.setItem(22, CrateAPI.getInstance().createConfigItem("guis.edit.items.stacktitle", 0, 0));
         inventory.setItem(23, CrateAPI.getInstance().createConfigItem("guis.edit.items.animationtheme", 0, 0));
 
         int pane = 1;

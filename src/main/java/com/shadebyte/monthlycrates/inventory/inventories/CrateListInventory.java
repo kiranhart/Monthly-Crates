@@ -3,7 +3,10 @@ package com.shadebyte.monthlycrates.inventory.inventories;
 import com.google.common.collect.Lists;
 import com.shadebyte.monthlycrates.Core;
 import com.shadebyte.monthlycrates.api.CrateAPI;
+import com.shadebyte.monthlycrates.api.enums.Permissions;
+import com.shadebyte.monthlycrates.crate.Crate;
 import com.shadebyte.monthlycrates.inventory.MGUI;
+import com.shadebyte.monthlycrates.utils.NBTEditor;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -47,6 +50,13 @@ public class CrateListInventory implements MGUI {
     public void click(InventoryClickEvent e, ItemStack clicked, int slot) {
         e.setCancelled(true);
         Player p = (Player) e.getWhoClicked();
+
+        if (e.getWhoClicked().hasPermission(Permissions.ADMIN.getNode())) {
+            if (NBTEditor.getItemTag(clicked, "MCrate") != null) {
+                String node = (String) NBTEditor.getItemTag(clicked, "MCrate");
+                e.getWhoClicked().getInventory().addItem(Crate.getInstance(node).getItemStack((Player) e.getWhoClicked()));
+            }
+        }
 
         try {
             if (PAGE >= 1 && slot == 48) p.openInventory(this.setPage(this.getPage() - 1).getInventory());

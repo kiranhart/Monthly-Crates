@@ -74,12 +74,12 @@ guis:
         name: "&b&lEdit Crate Title"
         lore:
           - "&7Click to change the editing crate's name."
-      item:
+      stacktitle:
         item: "STAINED_GLASS_PANE:2"
-        name: "&b&lEdit Crate Item"
+        name: "&b&lEdit Crate Item Title"
         lore:
-          - "&7Click to change the physical item that will"
-          - "&7be given as a crate for this crate."
+          - "&7Click to change the title of the itemstack"
+          - "&7of the crate itself"
       animationtheme:
         item: "STAINED_GLASS_PANE:2"
         name: "&b&lEdit Crate Theme"

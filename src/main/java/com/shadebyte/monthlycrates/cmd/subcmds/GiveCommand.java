@@ -32,44 +32,47 @@ public class GiveCommand extends SubCommand {
         }
 
         if (args.length == 2) {
-            if (!Crate.getInstance(args[1].toLowerCase()).exist()) {
-                sender.sendMessage(Core.getInstance().getSettings().getPrefix() + Core.getInstance().getLocale().getMessage(Lang.CRATE_MISSING.getNode()));
-            } else {
+            Player target = Bukkit.getPlayerExact(args[1]);
+            if (target != null) {
                 sender.sendMessage(Core.getInstance().getSettings().getPrefix() + Core.getInstance().getLocale().getMessage(Lang.GIVE_COMMAND.getNode()));
+            } else {
+                sender.sendMessage(Core.getInstance().getSettings().getPrefix() + Core.getInstance().getLocale().getMessage(Lang.PLAYER_OFFLINE.getNode()));
             }
         }
 
         if (args.length == 3) {
-            if (!Crate.getInstance(args[1].toLowerCase()).exist()) {
-                sender.sendMessage(Core.getInstance().getSettings().getPrefix() + Core.getInstance().getLocale().getMessage(Lang.CRATE_MISSING.getNode()));
-            } else {
-                Player target = Bukkit.getPlayerExact(args[2]);
-                if (target != null) {
-                    sender.sendMessage(Core.getInstance().getSettings().getPrefix() + Core.getInstance().getLocale().getMessage(Lang.GIVE_COMMAND.getNode()));
+
+            Player target = Bukkit.getPlayerExact(args[1]);
+            if (target != null) {
+                if (!Crate.getInstance(args[2].toLowerCase()).exist()) {
+                    sender.sendMessage(Core.getInstance().getSettings().getPrefix() + Core.getInstance().getLocale().getMessage(Lang.CRATE_MISSING.getNode()));
                 } else {
-                    sender.sendMessage(Core.getInstance().getSettings().getPrefix() + Core.getInstance().getLocale().getMessage(Lang.PLAYER_OFFLINE.getNode()));
+                    sender.sendMessage(Core.getInstance().getSettings().getPrefix() + Core.getInstance().getLocale().getMessage(Lang.GIVE_COMMAND.getNode()));
                 }
+            } else {
+                sender.sendMessage(Core.getInstance().getSettings().getPrefix() + Core.getInstance().getLocale().getMessage(Lang.PLAYER_OFFLINE.getNode()));
             }
+
         }
 
         if (args.length == 4) {
-            if (!Crate.getInstance(args[1].toLowerCase()).exist()) {
-                sender.sendMessage(Core.getInstance().getSettings().getPrefix() + Core.getInstance().getLocale().getMessage(Lang.CRATE_MISSING.getNode()));
-            } else {
-                Player target = Bukkit.getPlayerExact(args[2]);
-                if (target != null) {
+            Player target = Bukkit.getPlayerExact(args[1]);
+            if (target != null) {
+                if (!Crate.getInstance(args[2].toLowerCase()).exist()) {
+                    sender.sendMessage(Core.getInstance().getSettings().getPrefix() + Core.getInstance().getLocale().getMessage(Lang.CRATE_MISSING.getNode()));
+                } else {
                     if (CrateAPI.getInstance().isInteger(args[3])) {
                         for (int i = 0; i < Integer.parseInt(args[3]); i++) {
-                            target.getInventory().addItem(Crate.getInstance(args[1].toLowerCase()).getItemStack(target));
+                            target.getInventory().addItem(Crate.getInstance(args[2].toLowerCase()).getItemStack(target));
                         }
                         target.sendMessage(Core.getInstance().getSettings().getPrefix() + Core.getInstance().getLocale().getMessage(Lang.CRATE_RECEIVED.getNode()).replace("{player}", sender.getName()));
-                        sender.sendMessage(Core.getInstance().getSettings().getPrefix() + Core.getInstance().getLocale().getMessage(Lang.CRATE_GIVE.getNode()).replace("{crate_name}", args[1]).replace("{amount}", args[3]).replace("{player}", target.getName()));
+                        sender.sendMessage(Core.getInstance().getSettings().getPrefix() + Core.getInstance().getLocale().getMessage(Lang.CRATE_GIVE.getNode()).replace("{crate_name}", args[2]).replace("{amount}", args[3]).replace("{player}", target.getName()));
                     } else {
                         sender.sendMessage(Core.getInstance().getSettings().getPrefix() + Core.getInstance().getLocale().getMessage(Lang.NOT_A_NUMBER.getNode()));
                     }
-                } else {
-                    sender.sendMessage(Core.getInstance().getSettings().getPrefix() + Core.getInstance().getLocale().getMessage(Lang.PLAYER_OFFLINE.getNode()));
                 }
+            } else {
+                sender.sendMessage(Core.getInstance().getSettings().getPrefix() + Core.getInstance().getLocale().getMessage(Lang.PLAYER_OFFLINE.getNode()));
             }
         }
     }

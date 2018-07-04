@@ -20,6 +20,7 @@ public final class Core extends JavaPlugin {
     public Map<UUID, String> editingCrate;
     public Map<UUID, CratePane> editingCrateItems;
     public List<UUID> editingTitle;
+    public List<UUID> editingStack;
     public List<UUID> openingCrate;
 
     //Instance variable.
@@ -47,6 +48,7 @@ public final class Core extends JavaPlugin {
         editingCrate = new HashMap<>();
         editingCrateItems = new HashMap<>();
         editingTitle = new ArrayList<>();
+        editingStack = new ArrayList<>();
         openingCrate = new ArrayList<>();
 
         initFiles();

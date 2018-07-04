@@ -30,6 +30,7 @@ public class HelpCommand extends SubCommand {
         sender.sendMessage(translateAlternateColorCodes('&', "&7/MonthlyCrates edit <crate name>"));
         sender.sendMessage(translateAlternateColorCodes('&', "&7/MonthlyCrates give <player> <crate> <#>"));
         sender.sendMessage(translateAlternateColorCodes('&', "&7/MonthlyCrates giveall <crate> <#>"));
+        sender.sendMessage(translateAlternateColorCodes('&', "&7/MonthlyCrates list"));
         sender.sendMessage(translateAlternateColorCodes('&', ""));
         sender.sendMessage(translateAlternateColorCodes('&', "&e=========================================="));
     }

@@ -48,6 +48,11 @@ public class Crate {
     }
 
     public void setDisplayName(String name) {
+        Core.getCrates().getConfig().set("crates." + node.toLowerCase() + ".name", name);
+        Core.getCrates().saveConfig();
+    }
+
+    public void setName(String name) {
         Core.getCrates().getConfig().set("crates." + node.toLowerCase() + ".item.name", name);
         Core.getCrates().saveConfig();
     }

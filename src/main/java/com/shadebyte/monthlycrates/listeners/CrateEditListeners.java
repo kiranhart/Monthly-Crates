@@ -47,4 +47,32 @@ public class CrateEditListeners implements Listener {
             Debugger.report(ex);
         }
     }
+
+    @EventHandler
+    public void onCrateStackTitleEdit(AsyncPlayerChatEvent e) {
+        try {
+
+            Player p = e.getPlayer();
+
+            if (!Core.getInstance().editingCrate.containsKey(p.getUniqueId()) && !Core.getInstance().editingStack.contains(p.getUniqueId())) {
+                return;
+            }
+
+            String msg = e.getMessage();
+
+            if (msg.equalsIgnoreCase(Core.getInstance().getConfig().getString("cancel-word"))) {
+                Core.getInstance().editingCrate.remove(p.getUniqueId());
+                Core.getInstance().editingStack.remove(p.getUniqueId());
+                p.sendMessage(Core.getInstance().getSettings().getPrefix() + Core.getInstance().getLocale().getMessage(Lang.EDIT_CANCEL.getNode()));
+            } else {
+                Crate.getInstance(Core.getInstance().editingCrate.get(p.getUniqueId())).setName(msg);
+                Core.getInstance().editingCrate.remove(p.getUniqueId());
+                Core.getInstance().editingStack.remove(p.getUniqueId());
+                p.sendMessage(Core.getInstance().getSettings().getPrefix() + Core.getInstance().getLocale().getMessage(Lang.CRATE_SAVED.getNode()));
+                e.setCancelled(true);
+            }
+        } catch (Exception ex) {
+            Debugger.report(ex);
+        }
+    }
 }
