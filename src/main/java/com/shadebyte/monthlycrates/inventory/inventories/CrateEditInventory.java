@@ -8,6 +8,7 @@ import com.shadebyte.monthlycrates.inventory.MGUI;
 import com.shadebyte.monthlycrates.language.Lang;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
@@ -42,60 +43,82 @@ public class CrateEditInventory implements MGUI {
     @Override
     public void click(InventoryClickEvent e, ItemStack clicked, int slot) {
         e.setCancelled(true);
+
+        if (slot <= -1 || clicked == null || clicked.getType() == Material.AIR) {
+            return;
+        }
+
         if (clicked.isSimilar(CrateAPI.getInstance().createConfigItem("guis.edit.items.animationtheme", 0, 0))) {
             e.getWhoClicked().sendMessage(Core.getInstance().getSettings().getPrefix() + Core.getInstance().getLocale().getMessage(Lang.DISABLED.getNode()));
             return;
         }
 
-        if(slot == 21 || slot == 22) {
+        if (clicked.isSimilar(CrateAPI.getInstance().createConfigItem("guis.edit.items.item", 0, 0))) {
+            e.getWhoClicked().sendMessage(Core.getInstance().getSettings().getPrefix() + Core.getInstance().getLocale().getMessage(Lang.DISABLED.getNode()));
+            return;
+        }
+
+        if (slot == 21) {
             player.closeInventory();
             Core.getInstance().editingTitle.add(player.getUniqueId());
             player.sendMessage(Core.getInstance().getSettings().getPrefix() + Core.getInstance().getLocale().getMessage(Lang.CRATE_EDIT_TITLE.getNode()));
+            return;
         }
 
         switch (slot) {
             case 36:
                 Core.getInstance().editingCrate.put(player.getUniqueId(), name);
                 Core.getInstance().editingCrateItems.put(player.getUniqueId(), CratePane.ONE);
+                player.openInventory(CrateItemEditInventory.getInstance(player, name).getInventory());
                 break;
             case 37:
                 Core.getInstance().editingCrate.put(player.getUniqueId(), name);
                 Core.getInstance().editingCrateItems.put(player.getUniqueId(), CratePane.TWO);
+                player.openInventory(CrateItemEditInventory.getInstance(player, name).getInventory());
                 break;
             case 38:
                 Core.getInstance().editingCrate.put(player.getUniqueId(), name);
                 Core.getInstance().editingCrateItems.put(player.getUniqueId(), CratePane.THREE);
+                player.openInventory(CrateItemEditInventory.getInstance(player, name).getInventory());
                 break;
             case 39:
                 Core.getInstance().editingCrate.put(player.getUniqueId(), name);
                 Core.getInstance().editingCrateItems.put(player.getUniqueId(), CratePane.FOUR);
+                player.openInventory(CrateItemEditInventory.getInstance(player, name).getInventory());
                 break;
             case 40:
                 Core.getInstance().editingCrate.put(player.getUniqueId(), name);
                 Core.getInstance().editingCrateItems.put(player.getUniqueId(), CratePane.FIVE);
+                player.openInventory(CrateItemEditInventory.getInstance(player, name).getInventory());
                 break;
             case 41:
                 Core.getInstance().editingCrate.put(player.getUniqueId(), name);
                 Core.getInstance().editingCrateItems.put(player.getUniqueId(), CratePane.SIX);
+                player.openInventory(CrateItemEditInventory.getInstance(player, name).getInventory());
                 break;
             case 42:
                 Core.getInstance().editingCrate.put(player.getUniqueId(), name);
                 Core.getInstance().editingCrateItems.put(player.getUniqueId(), CratePane.SEVEN);
+                player.openInventory(CrateItemEditInventory.getInstance(player, name).getInventory());
                 break;
             case 43:
                 Core.getInstance().editingCrate.put(player.getUniqueId(), name);
                 Core.getInstance().editingCrateItems.put(player.getUniqueId(), CratePane.EIGHT);
+                player.openInventory(CrateItemEditInventory.getInstance(player, name).getInventory());
                 break;
             case 44:
                 Core.getInstance().editingCrate.put(player.getUniqueId(), name);
                 Core.getInstance().editingCrateItems.put(player.getUniqueId(), CratePane.NINE);
+                player.openInventory(CrateItemEditInventory.getInstance(player, name).getInventory());
                 break;
             case 49:
                 Core.getInstance().editingCrate.put(player.getUniqueId(), name);
                 Core.getInstance().editingCrateItems.put(player.getUniqueId(), CratePane.TEN);
+                player.openInventory(CrateItemEditInventory.getInstance(player, name).getInventory());
+                break;
+            default:
                 break;
         }
-        player.openInventory(CrateItemEditInventory.getInstance(player, name).getInventory());
     }
 
     @Override
