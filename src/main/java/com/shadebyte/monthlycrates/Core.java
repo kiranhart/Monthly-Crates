@@ -1,6 +1,5 @@
 package com.shadebyte.monthlycrates;
 
-import com.shadebyte.monthlycrates.api.enums.Permissions;
 import com.shadebyte.monthlycrates.cmd.CommandManager;
 import com.shadebyte.monthlycrates.crate.CratePane;
 import com.shadebyte.monthlycrates.language.Locale;
@@ -12,6 +11,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.File;
 import java.util.*;
 
 public final class Core extends JavaPlugin {
@@ -65,7 +65,7 @@ public final class Core extends JavaPlugin {
         commandManager = new CommandManager();
 
         commandManager.initialize();
-        
+
     }
 
     @Override
@@ -78,6 +78,9 @@ public final class Core extends JavaPlugin {
 
     private void initFiles() {
         crates = new ConfigWrapper(this, "", "crates.yml");
+        if (!new File(this.getDataFolder(), "crates.yml").exists()) {
+            crates.getConfig().createSection("crates");
+        }
         crates.saveConfig();
     }
 

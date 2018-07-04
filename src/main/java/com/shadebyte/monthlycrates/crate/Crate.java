@@ -24,7 +24,6 @@ import java.util.List;
 public class Crate {
 
     private static Crate instance;
-
     private String node;
 
     private Crate(String node) {
@@ -32,9 +31,7 @@ public class Crate {
     }
 
     public static Crate getInstance(String node) {
-        if (instance == null) {
-            instance = new Crate(node);
-        }
+        instance = new Crate(node);
         return instance;
     }
 

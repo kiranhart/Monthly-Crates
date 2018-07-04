@@ -39,7 +39,6 @@ public class CrateListInventory implements MGUI {
     }
 
     private static int[] borderNumbers = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 17, 18, 26, 27, 35, 36, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53};
-    private List<List<ItemStack>> chunks = Lists.partition(CrateAPI.getInstance().getListOfCrates(), 28);
 
     private int PAGE = 1;
 
@@ -78,6 +77,7 @@ public class CrateListInventory implements MGUI {
         inventory.setItem(49, CrateAPI.getInstance().createConfigItem("guis.listing.items.currentpage", 0, PAGE));
         inventory.setItem(50, CrateAPI.getInstance().createConfigItem("guis.listing.items.nextpage", 0, 0));
 
+        List<List<ItemStack>> chunks = Lists.partition(CrateAPI.getInstance().getListOfCrates(), 28);
         //Pagination
         chunks.get(getPage() - 1).forEach(stack -> inventory.addItem(stack));
 

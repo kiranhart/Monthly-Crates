@@ -1,5 +1,5 @@
 <component name="ArtifactManager">
-  <artifact type="jar" build-on-make="true" name="Monthly Crates:jar">
+  <artifact type="jar" name="Monthly Crates:jar">
     <output-path />
     <root id="archive" name="monthly-crates.jar">
       <element id="module-output" name="monthly-crates" />

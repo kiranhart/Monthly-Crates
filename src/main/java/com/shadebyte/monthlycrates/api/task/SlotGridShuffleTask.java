@@ -8,7 +8,6 @@ import com.shadebyte.monthlycrates.utils.Debugger;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.concurrent.ThreadLocalRandom;
 

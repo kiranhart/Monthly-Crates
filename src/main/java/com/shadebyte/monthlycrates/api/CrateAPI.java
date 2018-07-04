@@ -46,7 +46,9 @@ public class CrateAPI {
 
     public List<ItemStack> getListOfCrates() {
         List<ItemStack> stack = new ArrayList<>();
-        stack.add(Crate.getInstance("june").getItemStack());
+        for (String s : Core.getCrates().getConfig().getConfigurationSection("crates").getKeys(false)) {
+            stack.add(Crate.getInstance(s).getItemStack());
+        }
         return stack;
     }
 
