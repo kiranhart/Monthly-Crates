@@ -1,5 +1,6 @@
 package com.shadebyte.monthlycrates;
 
+import com.massivestats.MassiveStats;
 import com.shadebyte.monthlycrates.cmd.CommandManager;
 import com.shadebyte.monthlycrates.crate.CratePane;
 import com.shadebyte.monthlycrates.language.Locale;
@@ -7,6 +8,7 @@ import com.shadebyte.monthlycrates.listeners.CrateEditListeners;
 import com.shadebyte.monthlycrates.listeners.MGUIListener;
 import com.shadebyte.monthlycrates.listeners.PlayerListeners;
 import com.shadebyte.monthlycrates.utils.ConfigWrapper;
+import com.shadebyte.monthlycrates.utils.Debugger;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -68,6 +70,12 @@ public final class Core extends JavaPlugin {
 
         commandManager.initialize();
 
+        try {
+            MassiveStats stats = new MassiveStats(this);
+            stats.setListenerDisabled(false);
+        } catch (Exception e) {
+            Debugger.report(e);
+        }
     }
 
     @Override

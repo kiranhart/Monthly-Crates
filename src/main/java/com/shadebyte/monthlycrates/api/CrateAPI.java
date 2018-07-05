@@ -5,6 +5,7 @@ import com.shadebyte.monthlycrates.crate.Crate;
 import com.shadebyte.monthlycrates.utils.Debugger;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -86,5 +87,23 @@ public class CrateAPI {
             }
         }
         return count;
+    }
+
+    @SuppressWarnings("deprecation")
+    public static ItemStack getItemInHand(Player player) {
+        if(Version.getCurrentVersion().getCurrentVersionInteger() >= Version.v1_9_R1.getCurrentVersionInteger()) {
+            return player.getInventory().getItemInMainHand();
+        }else {
+            return player.getItemInHand();
+        }
+    }
+
+    @SuppressWarnings("deprecation")
+    public static void setItemInHand(Player player, ItemStack item) {
+        if(Version.getCurrentVersion().getCurrentVersionInteger() >= Version.v1_9_R1.getCurrentVersionInteger()) {
+            player.getInventory().setItemInMainHand(item);
+        }else {
+            player.setItemInHand(item);
+        }
     }
 }

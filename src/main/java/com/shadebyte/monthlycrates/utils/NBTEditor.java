@@ -13,9 +13,16 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
+/**
+ * Sets/Gets NBT tags from ItemStacks
+ *
+ * @author BananaPuncher714
+ * @version 5.0
+ */
 public class NBTEditor {
-
     private static HashMap<String, Class<?>> classCache;
     private static HashMap<String, Method> methodCache;
     private static HashMap<Class<?>, Constructor<?>> constructorCache;
@@ -47,6 +54,8 @@ public class NBTEditor {
             classCache.put("BlockPosition", Class.forName("net.minecraft.server." + version + "." + "BlockPosition"));
             classCache.put("TileEntity", Class.forName("net.minecraft.server." + version + "." + "TileEntity"));
             classCache.put("World", Class.forName("net.minecraft.server." + version + "." + "World"));
+
+            classCache.put("TileEntitySkull", Class.forName("net.minecraft.server." + version + "." + "TileEntitySkull"));
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
@@ -84,9 +93,15 @@ public class NBTEditor {
             methodCache.put("getEntityTag", getNMSClass("Entity").getMethod("c", getNMSClass("NBTTagCompound")));
             methodCache.put("setEntityTag", getNMSClass("Entity").getMethod("f", getNMSClass("NBTTagCompound")));
 
-            methodCache.put("setTileTag", getNMSClass("TileEntity").getMethod("a", getNMSClass("NBTTagCompound")));
+            if (version.contains("1_12")) {
+                methodCache.put("setTileTag", getNMSClass("TileEntity").getMethod("load", getNMSClass("NBTTagCompound")));
+            } else {
+                methodCache.put("setTileTag", getNMSClass("TileEntity").getMethod("a", getNMSClass("NBTTagCompound")));
+            }
             methodCache.put("getTileEntity", getNMSClass("World").getMethod("getTileEntity", getNMSClass("BlockPosition")));
             methodCache.put("getWorldHandle", getNMSClass("CraftWorld").getMethod("getHandle"));
+
+            //methodCache.put( "setGameProfile", getNMSClass( "TileEntitySkull" ).getMethod( "setGameProfile", GameProfile.class ) );
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -156,7 +171,6 @@ public class NBTEditor {
         Class<?> clazz = object.getClass();
         try {
             if (NBTTagFieldCache.containsKey(clazz)) {
-                System.out.println(NBTTagFieldCache.get(clazz).get(object));
                 return NBTTagFieldCache.get(clazz).get(object);
             }
         } catch (Exception exception) {
@@ -182,6 +196,16 @@ public class NBTEditor {
             return Class.forName("net.minecraft.server." + version + "." + name);
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static String getMatch(String string, String regex) {
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(string);
+        if (matcher.find()) {
+            return matcher.group(1);
+        } else {
             return null;
         }
     }
