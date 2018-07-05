@@ -7,7 +7,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
-
+// made by Clip
 public class ConfigWrapper {
 
     private final JavaPlugin plugin;
