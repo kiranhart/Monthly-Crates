@@ -2,9 +2,12 @@ package com.shadebyte.monthlycrates.api.task;
 
 import com.shadebyte.monthlycrates.Core;
 import com.shadebyte.monthlycrates.api.CrateAPI;
+import com.shadebyte.monthlycrates.api.enums.Sounds;
 import com.shadebyte.monthlycrates.crate.Crate;
 import com.shadebyte.monthlycrates.crate.CratePane;
 import com.shadebyte.monthlycrates.utils.Debugger;
+import org.bukkit.entity.HumanEntity;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -71,6 +74,12 @@ public class SlotGridShuffleTask extends BukkitRunnable {
 
         try {
             inventory.setItem(clickedSlot, Crate.getInstance(crate).getPaneItems(pane).get(ThreadLocalRandom.current().nextInt(Crate.getInstance(crate).getPaneItems(pane).size())));
+            for (HumanEntity humanEntity : inventory.getViewers()) {
+                if(humanEntity instanceof Player) {
+                    Player p = (Player) humanEntity;
+                    p.playSound(p.getLocation(), Sounds.valueOf(Core.getInstance().getConfig().getString("sounds.animationtick").toUpperCase()).bukkitSound(), 1.0f, 1.0f);
+                }
+            }
         } catch (Exception e) {
             Debugger.report(e);
         }
@@ -79,7 +88,7 @@ public class SlotGridShuffleTask extends BukkitRunnable {
             timer = 0;
             this.cancel();
             if (isDone()) {
-                new FinalAnimationTask(inventory).runTaskTimer(Core.getInstance(), 0, 5);
+                new FinalAnimationTask(inventory).runTaskTimer(Core.getInstance(), 0, Core.getInstance().getConfig().getInt("tickrates.finalanimation"));
             }
         }
     }

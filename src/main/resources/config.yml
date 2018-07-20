@@ -3,6 +3,26 @@ debugger: true
 
 cancel-word: "cancel"
 
+######################################################
+# CHANGE MAX-NODE/MAX-TITLE VALUES AT YOUR OWN RISK! #
+######################################################
+
+#When creating a crate you give a name, the limit of characters is 16 # Change at your own risk.
+max-node-id-limit: 16
+#When changing the title of the gui for the crate, it cannot exceed 32 characters on spigot servers
+max-title-limit: 32
+
+sounds:
+  place: "ITEM_BREAK"
+  open: "BAT_TAKEOFF"
+  close: "FIZZ"
+  cantopen: "ITEM_BREAK"
+  animationtick: "LEVEL_UP"
+
+tickrates:
+  rowanimation: 4 #every 20 is one second. 4 is default
+  finalanimation: 5
+
 #If false, only the person who bought or was given the crate through
 #command may open it, otherwise anyone can open it!
 allow-nonowner-to-open: true

@@ -2,6 +2,7 @@ package com.shadebyte.monthlycrates.inventory.inventories;
 
 import com.shadebyte.monthlycrates.Core;
 import com.shadebyte.monthlycrates.api.CrateAPI;
+import com.shadebyte.monthlycrates.api.enums.Sounds;
 import com.shadebyte.monthlycrates.api.task.SlotGridShuffleTask;
 import com.shadebyte.monthlycrates.crate.Crate;
 import com.shadebyte.monthlycrates.crate.CratePane;
@@ -10,6 +11,7 @@ import com.shadebyte.monthlycrates.language.Lang;
 import com.shadebyte.monthlycrates.utils.Debugger;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
@@ -52,23 +54,23 @@ public class CrateContentInventory implements MGUI {
     public void click(InventoryClickEvent e, ItemStack clicked, int slot) {
         e.setCancelled(true);
         if (slot == 12 && clicked.isSimilar(CrateAPI.getInstance().createConfigItem("guis.crate.items.normal", 0, 0)))
-            new SlotGridShuffleTask(crateName, e.getClickedInventory(), slotAnimationSlots[0], 12, 25).runTaskTimer(Core.getInstance(), 0, 4);
+            new SlotGridShuffleTask(crateName, e.getClickedInventory(), slotAnimationSlots[0], 12, 25).runTaskTimer(Core.getInstance(), 0, Core.getInstance().getConfig().getInt("tickrates.rowanimation"));
         if (slot == 13 && clicked.isSimilar(CrateAPI.getInstance().createConfigItem("guis.crate.items.normal", 0, 0)))
-            new SlotGridShuffleTask(crateName, e.getClickedInventory(), slotAnimationSlots[1], 13, 25).runTaskTimer(Core.getInstance(), 0, 4);
+            new SlotGridShuffleTask(crateName, e.getClickedInventory(), slotAnimationSlots[1], 13, 25).runTaskTimer(Core.getInstance(), 0, Core.getInstance().getConfig().getInt("tickrates.rowanimation"));
         if (slot == 14 && clicked.isSimilar(CrateAPI.getInstance().createConfigItem("guis.crate.items.normal", 0, 0)))
-            new SlotGridShuffleTask(crateName, e.getClickedInventory(), slotAnimationSlots[2], 14, 25).runTaskTimer(Core.getInstance(), 0, 4);
+            new SlotGridShuffleTask(crateName, e.getClickedInventory(), slotAnimationSlots[2], 14, 25).runTaskTimer(Core.getInstance(), 0, Core.getInstance().getConfig().getInt("tickrates.rowanimation"));
         if (slot == 21 && clicked.isSimilar(CrateAPI.getInstance().createConfigItem("guis.crate.items.normal", 0, 0)))
-            new SlotGridShuffleTask(crateName, e.getClickedInventory(), slotAnimationSlots[3], 21, 25).runTaskTimer(Core.getInstance(), 0, 4);
+            new SlotGridShuffleTask(crateName, e.getClickedInventory(), slotAnimationSlots[3], 21, 25).runTaskTimer(Core.getInstance(), 0, Core.getInstance().getConfig().getInt("tickrates.rowanimation"));
         if (slot == 22 && clicked.isSimilar(CrateAPI.getInstance().createConfigItem("guis.crate.items.normal", 0, 0)))
-            new SlotGridShuffleTask(crateName, e.getClickedInventory(), slotAnimationSlots[4], 22, 25).runTaskTimer(Core.getInstance(), 0, 4);
+            new SlotGridShuffleTask(crateName, e.getClickedInventory(), slotAnimationSlots[4], 22, 25).runTaskTimer(Core.getInstance(), 0, Core.getInstance().getConfig().getInt("tickrates.rowanimation"));
         if (slot == 23 && clicked.isSimilar(CrateAPI.getInstance().createConfigItem("guis.crate.items.normal", 0, 0)))
-            new SlotGridShuffleTask(crateName, e.getClickedInventory(), slotAnimationSlots[5], 23, 25).runTaskTimer(Core.getInstance(), 0, 4);
+            new SlotGridShuffleTask(crateName, e.getClickedInventory(), slotAnimationSlots[5], 23, 25).runTaskTimer(Core.getInstance(), 0, Core.getInstance().getConfig().getInt("tickrates.rowanimation"));
         if (slot == 30 && clicked.isSimilar(CrateAPI.getInstance().createConfigItem("guis.crate.items.normal", 0, 0)))
-            new SlotGridShuffleTask(crateName, e.getClickedInventory(), slotAnimationSlots[6], 30, 25).runTaskTimer(Core.getInstance(), 0, 4);
+            new SlotGridShuffleTask(crateName, e.getClickedInventory(), slotAnimationSlots[6], 30, 25).runTaskTimer(Core.getInstance(), 0, Core.getInstance().getConfig().getInt("tickrates.rowanimation"));
         if (slot == 31 && clicked.isSimilar(CrateAPI.getInstance().createConfigItem("guis.crate.items.normal", 0, 0)))
-            new SlotGridShuffleTask(crateName, e.getClickedInventory(), slotAnimationSlots[7], 31, 25).runTaskTimer(Core.getInstance(), 0, 4);
+            new SlotGridShuffleTask(crateName, e.getClickedInventory(), slotAnimationSlots[7], 31, 25).runTaskTimer(Core.getInstance(), 0, Core.getInstance().getConfig().getInt("tickrates.rowanimation"));
         if (slot == 32 && clicked.isSimilar(CrateAPI.getInstance().createConfigItem("guis.crate.items.normal", 0, 0)))
-            new SlotGridShuffleTask(crateName, e.getClickedInventory(), slotAnimationSlots[8], 32, 25).runTaskTimer(Core.getInstance(), 0, 4);
+            new SlotGridShuffleTask(crateName, e.getClickedInventory(), slotAnimationSlots[8], 32, 25).runTaskTimer(Core.getInstance(), 0, Core.getInstance().getConfig().getInt("tickrates.rowanimation"));
         if (slot == 49 && clicked.isSimilar(CrateAPI.getInstance().createConfigItem("guis.crate.items.normal", 0, 0))) {
             Core.getInstance().openingCrate.remove(e.getWhoClicked().getUniqueId());
             try {
@@ -81,19 +83,21 @@ public class CrateContentInventory implements MGUI {
 
     @Override
     public void close(InventoryCloseEvent e) {
-        if (Core.getInstance().openingCrate.contains(e.getPlayer().getUniqueId())) {
+        Player p = (Player) e.getPlayer();
+        if (Core.getInstance().openingCrate.contains(p.getUniqueId())) {
             Bukkit.getServer().getScheduler().runTaskLater(Core.getInstance(), () -> {
-                e.getPlayer().openInventory(e.getInventory());
-                e.getPlayer().sendMessage(Core.getInstance().getSettings().getPrefix() + Core.getInstance().getLocale().getMessage(Lang.CRATE_CANT_EXIT.getNode()));
+                p.openInventory(e.getInventory());
+                p.sendMessage(Core.getInstance().getSettings().getPrefix() + Core.getInstance().getLocale().getMessage(Lang.CRATE_CANT_EXIT.getNode()));
             }, 1);
         } else {
-            if (CrateAPI.getInstance().availableSlots(e.getPlayer().getInventory()) < 10) {
-                Arrays.stream(normalItemSlots).forEach(slot -> e.getPlayer().getWorld().dropItemNaturally(e.getPlayer().getLocation(), e.getInventory().getItem(slot)));
-                e.getPlayer().getWorld().dropItemNaturally(e.getPlayer().getLocation(), e.getInventory().getItem(49));
+            if (CrateAPI.getInstance().availableSlots(p.getInventory()) < 10) {
+                Arrays.stream(normalItemSlots).forEach(slot -> p.getWorld().dropItemNaturally(p.getLocation(), e.getInventory().getItem(slot)));
+                p.getWorld().dropItemNaturally(p.getLocation(), e.getInventory().getItem(49));
             } else {
-                Arrays.stream(normalItemSlots).forEach(slot -> e.getPlayer().getInventory().addItem(e.getInventory().getItem(slot)));
-                e.getPlayer().getInventory().addItem(e.getInventory().getItem(49));
+                Arrays.stream(normalItemSlots).forEach(slot -> p.getInventory().addItem(e.getInventory().getItem(slot)));
+                p.getInventory().addItem(e.getInventory().getItem(49));
             }
+            p.playSound(p.getLocation(), Sounds.valueOf(Core.getInstance().getConfig().getString("sounds.close").toUpperCase()).bukkitSound(), 1.0f, 1.0f);
         }
     }
 

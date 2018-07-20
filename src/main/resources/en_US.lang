@@ -4,6 +4,7 @@ help = "&cPlease enter a subcommand (/monthlycrates help)"
 #Commands
 commands.create = "&e&lUsage&f: &7/MCrate create &c<name>"
 commands.remove = "&e&lUsage&f: &7/MCrate remove &c<name>"
+commands.edit = "&e&lUsage&f: &7/MCrate edit &c<name>"
 commands.giveall = "&e&lUsage&f: &7/MCrate giveall &c<crate> <#>"
 commands.give= "&e&lUsage&f: &7/MCrate give &c<player> <crate> <#>"
 

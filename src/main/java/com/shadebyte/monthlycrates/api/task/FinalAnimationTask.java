@@ -1,6 +1,10 @@
 package com.shadebyte.monthlycrates.api.task;
 
+import com.shadebyte.monthlycrates.Core;
 import com.shadebyte.monthlycrates.api.CrateAPI;
+import com.shadebyte.monthlycrates.api.enums.Sounds;
+import org.bukkit.entity.HumanEntity;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -89,26 +93,39 @@ public class FinalAnimationTask extends BukkitRunnable {
         }
     }
 
+    private void sound(){
+        for (HumanEntity humanEntity : inventory.getViewers()) {
+            if(humanEntity instanceof Player) {
+                Player p = (Player) humanEntity;
+                p.playSound(p.getLocation(), Sounds.valueOf(Core.getInstance().getConfig().getString("sounds.animationtick").toUpperCase()).bukkitSound(), 1.0f, 1.0f);
+            }
+        }
+    }
+
     private void part(int color) {
         if (part == 1) {
             set(columns[0], color);
             set(columns[8], color);
+            sound();
         }
 
         if (part == 2) {
             set(columns[1], color);
             set(columns[7], color);
+            sound();
         }
 
         if (part == 3) {
             set(columns[2], color);
             set(columns[6], color);
+            sound();
         }
 
         if (part == 4) {
             set(columns[3], color);
             set(columns[5], color);
             set(columns[4], color);
+            sound();
             part = 0;
             stage = stage + 1;
         }

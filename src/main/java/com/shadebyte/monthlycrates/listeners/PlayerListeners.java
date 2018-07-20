@@ -2,6 +2,7 @@ package com.shadebyte.monthlycrates.listeners;
 
 import com.shadebyte.monthlycrates.Core;
 import com.shadebyte.monthlycrates.api.CrateAPI;
+import com.shadebyte.monthlycrates.api.enums.Sounds;
 import com.shadebyte.monthlycrates.inventory.inventories.CrateContentInventory;
 import com.shadebyte.monthlycrates.language.Lang;
 import com.shadebyte.monthlycrates.utils.NBTEditor;
@@ -41,6 +42,7 @@ public class PlayerListeners implements Listener {
         try {
             if (NBTEditor.getItemTag(CrateAPI.getItemInHand(p), "MCrate") != null) {
                 e.setCancelled(true);
+                p.playSound(p.getLocation(), Sounds.valueOf(Core.getInstance().getConfig().getString("sounds.place").toUpperCase()).bukkitSound(), 1.0f, 1.0f);
             }
         } catch (Exception ex) {
         }
@@ -64,6 +66,7 @@ public class PlayerListeners implements Listener {
                     String node = (String) NBTEditor.getItemTag(CrateAPI.getItemInHand(p), "MCrate");
 
                     if (!Core.getCrates().getConfig().contains("crates." + node)) {
+                        p.playSound(p.getLocation(), Sounds.valueOf(Core.getInstance().getConfig().getString("sounds.cantopen").toUpperCase()).bukkitSound(), 1.0f, 1.0f);
                         return;
                     }
 
@@ -73,13 +76,16 @@ public class PlayerListeners implements Listener {
                             p.openInventory(CrateContentInventory.getInstance(node).getInventory());
                             Core.getInstance().openingCrate.add(p.getUniqueId());
                             remove(p);
+                            p.playSound(p.getLocation(), Sounds.valueOf(Core.getInstance().getConfig().getString("sounds.open").toUpperCase()).bukkitSound(), 1.0f, 1.0f);
                         } else {
                             e.getPlayer().sendMessage(Core.getInstance().getSettings().getPrefix() + Core.getInstance().getLocale().getMessage(Lang.CRATE_CANT_OPEN.getNode()));
+                            p.playSound(p.getLocation(), Sounds.valueOf(Core.getInstance().getConfig().getString("sounds.cantopen").toUpperCase()).bukkitSound(), 1.0f, 1.0f);
                         }
                     } else {
                         p.openInventory(CrateContentInventory.getInstance(node).getInventory());
                         Core.getInstance().openingCrate.add(p.getUniqueId());
                         remove(p);
+                        p.playSound(p.getLocation(), Sounds.valueOf(Core.getInstance().getConfig().getString("sounds.open").toUpperCase()).bukkitSound(), 1.0f, 1.0f);
                     }
                 }
             }

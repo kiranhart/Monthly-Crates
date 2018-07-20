@@ -6,7 +6,7 @@
 
     <groupId>com.shadebyte</groupId>
     <artifactId>monthly-crates</artifactId>
-    <version>1.0.2</version>
+    <version>1.0.3</version>
     <packaging>jar</packaging>
 
     <name>Monthly Crates</name>

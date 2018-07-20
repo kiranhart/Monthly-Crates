@@ -5,6 +5,7 @@ import com.shadebyte.monthlycrates.cmd.SubCommand;
 import com.shadebyte.monthlycrates.crate.Crate;
 import com.shadebyte.monthlycrates.api.enums.Permissions;
 import com.shadebyte.monthlycrates.language.Lang;
+import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
 /**
@@ -33,6 +34,10 @@ public class CreateCommand extends SubCommand {
             if (Crate.getInstance(name).exist()) {
                 sender.sendMessage(Core.getInstance().getSettings().getPrefix() + Core.getInstance().getLocale().getMessage(Lang.CRATE_EXIST.getNode()));
             } else {
+                if (args[1].length() > Core.getInstance().getConfig().getInt("max-node-id-limit")) {
+                    sender.sendMessage(Core.getInstance().getSettings().getPrefix() + ChatColor.translateAlternateColorCodes('&', "&cYou're exceeding the 32 character limit!"));
+                    return;
+                }
                 Crate.getInstance(name).create();
                 sender.sendMessage(Core.getInstance().getSettings().getPrefix() + Core.getInstance().getLocale().getMessage(Lang.CRATE_CREATED.getNode()).replace("{crate_name}", name.toLowerCase()));
             }

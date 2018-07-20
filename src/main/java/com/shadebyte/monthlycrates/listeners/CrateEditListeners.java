@@ -4,6 +4,7 @@ import com.shadebyte.monthlycrates.Core;
 import com.shadebyte.monthlycrates.crate.Crate;
 import com.shadebyte.monthlycrates.language.Lang;
 import com.shadebyte.monthlycrates.utils.Debugger;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -35,6 +36,10 @@ public class CrateEditListeners implements Listener {
                     Core.getInstance().editingTitle.remove(p.getUniqueId());
                     p.sendMessage(Core.getInstance().getSettings().getPrefix() + Core.getInstance().getLocale().getMessage(Lang.EDIT_CANCEL.getNode()));
                 } else {
+                    if (msg.length() > Core.getInstance().getConfig().getInt("max-title-limit")) {
+                        p.sendMessage(Core.getInstance().getSettings().getPrefix() + ChatColor.translateAlternateColorCodes('&', "&cYou're exceeding the 32 character limit!"));
+                        return;
+                    }
                     Crate.getInstance(Core.getInstance().editingCrate.get(p.getUniqueId())).setDisplayName(msg);
                     Core.getInstance().editingCrate.remove(p.getUniqueId());
                     Core.getInstance().editingTitle.remove(p.getUniqueId());
