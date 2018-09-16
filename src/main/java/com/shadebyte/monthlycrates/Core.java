@@ -30,6 +30,7 @@ public final class Core extends JavaPlugin {
 
     //Configuration Files
     private static ConfigWrapper crates;
+    private static ConfigWrapper users_opening;
 
     //Locale
     private Locale locale;
@@ -88,10 +89,13 @@ public final class Core extends JavaPlugin {
 
     private void initFiles() {
         crates = new ConfigWrapper(this, "", "crates.yml");
-        if (!new File(this.getDataFolder(), "crates.yml").exists()) {
+        users_opening = new ConfigWrapper(this,"","users_opening.yml");
+        if (!new File(this.getDataFolder(), "crates.yml").exists())
             crates.getConfig().createSection("crates");
-        }
+        if (!new File(this.getDataFolder(), "users_opening.yml").exists())
+            users_opening.getConfig().createSection("player-uuids");
         crates.saveConfig();
+        users_opening.saveConfig();
     }
 
     private void initEvents() {
@@ -113,6 +117,10 @@ public final class Core extends JavaPlugin {
      */
     public static ConfigWrapper getCrates() {
         return crates;
+    }
+
+    public static ConfigWrapper getUsersOpening() {
+        return users_opening;
     }
 
     /**

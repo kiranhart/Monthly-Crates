@@ -1,6 +1,9 @@
 package com.shadebyte.monthlycrates.utils;
 
 import com.shadebyte.monthlycrates.Core;
+import org.bukkit.Bukkit;
+import org.bukkit.command.ConsoleCommandSender;
+
 import static org.bukkit.ChatColor.translateAlternateColorCodes;
 
 /**
@@ -12,12 +15,13 @@ import static org.bukkit.ChatColor.translateAlternateColorCodes;
 public class Debugger {
 
     public static void report(Exception e) {
+        ConsoleCommandSender console = Bukkit.getConsoleSender();
         if (debugEnabled()) {
-            System.out.println(translateAlternateColorCodes('&', "&b================================================================"));
-            System.out.println(translateAlternateColorCodes('&', "&eMonthly Crates has ran into an error, report this to the author."));
-            System.out.println(translateAlternateColorCodes('&', "&b----------------------------------------------------------------"));
+            console.sendMessage(translateAlternateColorCodes('&', "&b================================================================"));
+            console.sendMessage(translateAlternateColorCodes('&', "&eMonthly Crates has run into an error. Report this to the author."));
+            console.sendMessage(translateAlternateColorCodes('&', "&b----------------------------------------------------------------"));
             e.printStackTrace();
-            System.out.println(translateAlternateColorCodes('&', "&b================================================================"));
+            console.sendMessage(translateAlternateColorCodes('&', "&b================================================================"));
         }
     }
 

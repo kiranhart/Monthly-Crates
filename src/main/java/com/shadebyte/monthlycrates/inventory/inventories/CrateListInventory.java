@@ -49,6 +49,8 @@ public class CrateListInventory implements MGUI {
     @Override
     public void click(InventoryClickEvent e, ItemStack clicked, int slot) {
         e.setCancelled(true);
+        if (e.getClickedInventory() != e.getInventory())
+            return;
         Player p = (Player) e.getWhoClicked();
 
         if (e.getWhoClicked().hasPermission(Permissions.ADMIN.getNode())) {

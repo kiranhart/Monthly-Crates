@@ -9,16 +9,23 @@ import com.shadebyte.monthlycrates.crate.CratePane;
 import com.shadebyte.monthlycrates.inventory.MGUI;
 import com.shadebyte.monthlycrates.language.Lang;
 import com.shadebyte.monthlycrates.utils.Debugger;
+import com.shadebyte.monthlycrates.utils.Serializer;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.scheduler.BukkitRunnable;
 
+import java.io.IOException;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
@@ -36,18 +43,19 @@ public class CrateContentInventory implements MGUI {
             {3, 39, 48, 27, 28, 29, 33, 34, 35}, {4, 40, 27, 28, 29, 33, 34, 35}, {5, 41, 50, 27, 28, 29, 33, 34, 35}
     };
 
+    private static Map<UUID,Inventory> inventories = new HashMap<>();
     private String crateName;
-    private static CrateContentInventory instance;
 
     private CrateContentInventory(String crateName) {
         this.crateName = crateName;
     }
 
     public static CrateContentInventory getInstance(String crateName) {
-        if (instance == null) {
-            instance = new CrateContentInventory(crateName);
-        }
-        return instance;
+        return new CrateContentInventory(crateName);
+    }
+
+    public static Map<UUID,Inventory> getInventories() {
+        return inventories;
     }
 
     @Override
@@ -98,12 +106,17 @@ public class CrateContentInventory implements MGUI {
                 p.getInventory().addItem(e.getInventory().getItem(49));
             }
             p.playSound(p.getLocation(), Sounds.valueOf(Core.getInstance().getConfig().getString("sounds.close").toUpperCase()).bukkitSound(), 1.0f, 1.0f);
+            inventories.remove(p.getUniqueId());
+            Core.getUsersOpening().getConfig().set("player-uuids."+p.getUniqueId(),null);
+            Core.getUsersOpening().saveConfig();
         }
     }
 
     @Override
     public Inventory getInventory() {
-        Inventory inventory = Bukkit.createInventory(this, 54, ChatColor.translateAlternateColorCodes('&', Core.getInstance().getConfig().getString("guis.crate.title").replace("{crate_name}", Crate.getInstance(crateName).getDisplayName())));
+        Inventory inventory;
+        inventory = Bukkit.createInventory(this, 54, ChatColor.translateAlternateColorCodes('&',
+                Core.getInstance().getConfig().getString("guis.crate.title").replace("{crate_name}", Crate.getInstance(crateName).getDisplayName())));
         if (Core.getInstance().getConfig().getBoolean("guis.crate.items.fill.enabled"))
             for (int i = 0; i < inventory.getSize(); i++)
                 inventory.setItem(i, CrateAPI.getInstance().createConfigItem("guis.crate.items.fill", 0, 0));
@@ -111,6 +124,39 @@ public class CrateContentInventory implements MGUI {
         Arrays.stream(normalItemSlots).forEach(slot -> inventory.setItem(slot, CrateAPI.getInstance().createConfigItem("guis.crate.items.normal", 0, 0)));
         inventory.setItem(49, CrateAPI.getInstance().createConfigItem("guis.crate.items.final-locked", 0, 0));
         return inventory;
+    }
+
+    public static void openFromLogin(PlayerJoinEvent e) {
+        Player p = e.getPlayer();
+        UUID uuid = p.getUniqueId();
+        Inventory inv;
+        if (inventories.get(uuid) != null) {
+            inv = inventories.get(uuid);
+        } else if (Core.getUsersOpening().getConfig().contains("player-uuids."+uuid)) {
+            String node = Core.getUsersOpening().getConfig().getString("player-uuids."+uuid+".node");
+            if (Crate.getInstance(node).exist())
+                inv = CrateContentInventory.getInstance(node).getInventory();
+            else return;
+        } else
+            return;
+        int[] slots = new int[]{12,13,13,21,22,23,30,31,32,49};
+        int item = 1;
+        for (int i : slots) {
+            try {
+                if (!Core.getInstance().getConfig().isSet("player-uuids."+uuid+"."+item)) continue;
+                inv.setItem(i, Serializer.getInstance().fromBase64(Core.getUsersOpening()
+                        .getConfig().getString("player-uuids." + uuid + "." + item)).get(0));
+                item++;
+            } catch (IOException err) {
+                err.printStackTrace();
+            }
+        }
+        new BukkitRunnable() {
+            public void run() {
+                p.openInventory(inv);
+                inventories.put(uuid,inv);
+            }
+        }.runTask(Core.getInstance());
     }
 
     @Override

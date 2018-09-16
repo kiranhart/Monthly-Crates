@@ -16,6 +16,8 @@ import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.UUID;
+
 /**
  * The current file has been created by Kiran Hart
  * Date Created: 6/28/2018
@@ -24,25 +26,22 @@ import org.bukkit.inventory.ItemStack;
  */
 public class CrateEditInventory implements MGUI {
 
-    private static CrateEditInventory instance;
     private String name;
-    private Player player;
+    private UUID uuid;
 
-    private CrateEditInventory(String name, Player player) {
+    private CrateEditInventory(String name, UUID uuid) {
         this.name = name;
-        this.player = player;
+        this.uuid = uuid;
     }
 
     public static CrateEditInventory getInstance(String name, Player player) {
-        if (instance == null) {
-            instance = new CrateEditInventory(name, player);
-        }
-        return instance;
+        return new CrateEditInventory(name, player.getUniqueId());
     }
 
     @Override
     public void click(InventoryClickEvent e, ItemStack clicked, int slot) {
         e.setCancelled(true);
+        Player player = toPlayer(uuid);
 
         if (slot <= -1 || clicked == null || clicked.getType() == Material.AIR) {
             return;
@@ -148,7 +147,7 @@ public class CrateEditInventory implements MGUI {
         }
 
         //Items
-        inventory.setItem(13, Crate.getInstance(name).getItemStack(player));
+        inventory.setItem(13, Crate.getInstance(name).getItemStack(toPlayer(uuid)));
         inventory.setItem(21, CrateAPI.getInstance().createConfigItem("guis.edit.items.name", 0, 0));
         inventory.setItem(22, CrateAPI.getInstance().createConfigItem("guis.edit.items.stacktitle", 0, 0));
         inventory.setItem(23, CrateAPI.getInstance().createConfigItem("guis.edit.items.animationtheme", 0, 0));
@@ -165,5 +164,9 @@ public class CrateEditInventory implements MGUI {
 
     public String getName() {
         return name;
+    }
+
+    private Player toPlayer(UUID uuid) {
+        return Bukkit.getPlayer(uuid);
     }
 }

@@ -34,6 +34,7 @@ public class RemoveCommand extends SubCommand {
                 sender.sendMessage(Core.getInstance().getSettings().getPrefix() + Core.getInstance().getLocale().getMessage(Lang.CRATE_MISSING.getNode()));
             } else {
                 Crate.getInstance(name).remove();
+
                 sender.sendMessage(Core.getInstance().getSettings().getPrefix() + Core.getInstance().getLocale().getMessage(Lang.CRATE_REMOVED.getNode()).replace("{crate_name}", name.toLowerCase()));
             }
         }

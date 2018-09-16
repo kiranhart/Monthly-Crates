@@ -5,7 +5,7 @@
   <artifactId>monthly-crates</artifactId>
   <name>Monthly Crates</name>
   <version>1.0.3</version>
-  <description>A high quality Monthly Crates pluign replica</description>
+  <description>A high quality Monthly Crates plugin replica</description>
   <url>https://www.shadebyte.com/</url>
   <build>
     <defaultGoal>clean package</defaultGoal>

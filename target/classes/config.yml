@@ -1,0 +1,108 @@
+#I suggest leaving this on to get a more detailed error report :)
+debugger: true
+
+cancel-word: "cancel"
+
+######################################################
+# CHANGE MAX-NODE/MAX-TITLE VALUES AT YOUR OWN RISK! #
+######################################################
+
+#When creating a crate you give a name, the limit of characters is 16 # Change at your own risk.
+max-node-id-limit: 16
+#When changing the title of the gui for the crate, it cannot exceed 32 characters on spigot servers
+max-title-limit: 32
+
+sounds:
+  place: "ITEM_BREAK"
+  open: "BAT_TAKEOFF"
+  close: "FIZZ"
+  cantopen: "ITEM_BREAK"
+  animationtick: "LEVEL_UP"
+
+tickrates:
+  rowanimation: 4 #every 20 is one second. 4 is default
+  finalanimation: 5
+
+#If false, only the person who bought or was given the crate through
+#command may open it, otherwise anyone can open it!
+allow-nonowner-to-open: true
+
+guis:
+  crate:
+    title: "&6&l{crate_name}"
+    items:
+      normal:
+        item: "ENDER_CHEST:0"
+        name: "&7&l???"
+        lore:
+          - "&7Click to redeem an item"
+          - "&7from this monthly crate"
+      final-locked:
+        item: "STAINED_GLASS_PANE:14"
+        name: "&C&L???"
+        lore:
+          - "&7You can't open the final reward"
+          - "&7until you have redeemed all other rewards."
+      fill:
+        enabled: true
+        item: "STAINED_GLASS_PANE:8"
+        name: "&7&l???"
+        lore:
+          - "&7???"
+  listing:
+    title: "&EListing all Crates"
+    border:
+      enabled: true
+      item:
+        item: "STAINED_GLASS_PANE:4"
+        name: "&6~"
+        lore:
+          - "&e*"
+    items:
+      currentpage:
+        item: "BOOK_AND_QUILL:0"
+        name: "&E&LCurrent Page&f: &b{page}"
+        lore:
+          - "&7--------------------"
+      nextpage:
+        item: "FEATHER:0"
+        name: "&e&l>> Next Page"
+        lore:
+          - "&7Go to next page if available"
+      previouspage:
+        item: "FEATHER:0"
+        name: "&e&lPrevious Page <<"
+        lore:
+          - "&7Go to previous page if available"
+  edit:
+    title: "&E&LEditing &6{crate_name} &eCrate"
+    items:
+      normalpane:
+        item: "STAINED_GLASS_PANE:5"
+        name: "&b&lEdit Slot&F: &7#&e{normal_pane_number}"
+        lore:
+          - "&7Click this pane to begin editing the items"
+          - "&7that can be earned in the roulette this pane."
+      finalpane:
+        item: "STAINED_GLASS_PANE:5"
+        name: "&b&lEdit Final Reward Pane"
+        lore:
+          - "&7Click this pane to begin editing the items"
+          - "&7that can be earned in final pane roulette."
+      name:
+        item: "STAINED_GLASS_PANE:2"
+        name: "&b&lEdit Crate Title"
+        lore:
+          - "&7Click to change the editing crate's name."
+      stacktitle:
+        item: "STAINED_GLASS_PANE:2"
+        name: "&b&lEdit Crate Item Title"
+        lore:
+          - "&7Click to change the title of the itemstack"
+          - "&7of the crate itself"
+      animationtheme:
+        item: "STAINED_GLASS_PANE:2"
+        name: "&b&lEdit Crate Theme"
+        lore:
+          - "&7Click to change the animation theme of this"
+          - "&7crate (Color scheme during the animations)"

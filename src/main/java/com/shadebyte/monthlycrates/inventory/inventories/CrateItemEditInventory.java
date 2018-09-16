@@ -9,7 +9,6 @@ import com.shadebyte.monthlycrates.utils.Serializer;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
@@ -17,10 +16,9 @@ import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * The current file has been created by Kiran Hart
@@ -30,24 +28,21 @@ import java.util.List;
  */
 public class CrateItemEditInventory implements MGUI {
 
-    private static CrateItemEditInventory instance;
-    private Player p;
+    private UUID uuid;
     private String crate;
 
-    private CrateItemEditInventory(Player p, String crate) {
-        this.p = p;
+    private CrateItemEditInventory(UUID uuid, String crate) {
+        this.uuid = uuid;
         this.crate = crate;
     }
 
     public static CrateItemEditInventory getInstance(Player p, String crate) {
-        if (instance == null) {
-            instance = new CrateItemEditInventory(p, crate);
-        }
-        return instance;
+        return new CrateItemEditInventory(p.getUniqueId(), crate);
     }
 
     @Override
     public void close(InventoryCloseEvent e) {
+        Player p = (Player)e.getPlayer();
         List<ItemStack> items = new ArrayList<>();
         for (ItemStack itemStack : e.getInventory().getContents()) {
             if (itemStack == null) {
@@ -72,10 +67,11 @@ public class CrateItemEditInventory implements MGUI {
 
     @Override
     public Inventory getInventory() {
-        Inventory inventory = Bukkit.createInventory(this, 54, ChatColor.translateAlternateColorCodes('&', "&eEditing Slot&f: &b" + Core.getInstance().editingCrateItems.get(p.getUniqueId())));
+        Inventory inventory = Bukkit.createInventory(this, 54, ChatColor.translateAlternateColorCodes
+                ('&', "&eEditing Slot&f: &b" + Core.getInstance().editingCrateItems.get(uuid)));
 
         try {
-            List<ItemStack> contents = Crate.getInstance(crate).getPaneItems(Core.getInstance().editingCrateItems.get(p.getUniqueId()));
+            List<ItemStack> contents = Crate.getInstance(crate).getPaneItems(Core.getInstance().editingCrateItems.get(uuid));
             contents.forEach(all -> inventory.addItem(all));
         } catch (Exception e) {
             Debugger.report(e);
@@ -90,5 +86,9 @@ public class CrateItemEditInventory implements MGUI {
 
     @Override
     public void drag(InventoryDragEvent e) {
+    }
+
+    private Player toPlayer() {
+        return Bukkit.getPlayer(this.uuid);
     }
 }

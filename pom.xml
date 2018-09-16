@@ -11,7 +11,7 @@
 
     <name>Monthly Crates</name>
 
-    <description>A high quality Monthly Crates pluign replica</description>
+    <description>A high quality Monthly Crates plugin replica</description>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>

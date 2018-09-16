@@ -11,9 +11,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 /**
  * The current file has been created by Kiran Hart
@@ -23,7 +21,7 @@ import java.util.List;
  */
 public class Crate {
 
-    private static Crate instance;
+    private static Set<Crate> crates = new HashSet<>();
     private String node;
 
     private Crate(String node) {
@@ -31,8 +29,16 @@ public class Crate {
     }
 
     public static Crate getInstance(String node) {
-        instance = new Crate(node);
-        return instance;
+        Iterator<Crate> iter = crates.iterator();
+        while (iter.hasNext()) {
+            Crate crate = iter.next();
+            if (crate.getDisplayName().equals(node.toLowerCase()))
+                return crate;
+        }
+        Crate crate = new Crate(node.toLowerCase());
+        if (crate.exist())
+            crates.add(crate);
+        return crate;
     }
 
     public boolean exist() {
@@ -125,9 +131,11 @@ public class Crate {
                     "&c&l* &cBonus One",
                     "&c&l* &cBonus Two"));
             for (CratePane cratePane : CratePane.values()) {
-                Core.getCrates().getConfig().set("crates." + node + ".panes." + cratePane.getVal(), Serializer.getInstance().toBase64(Arrays.asList(new ItemStack(Material.STAINED_GLASS_PANE, 1))));
+                Core.getCrates().getConfig().set("crates." + node + ".panes." + cratePane.getVal(),
+                        Serializer.getInstance().toBase64(Collections.singletonList(new ItemStack(Material.STAINED_GLASS_PANE, 1))));
             }
             Core.getCrates().saveConfig();
+            crates.add(this);
         }
     }
 
@@ -135,6 +143,7 @@ public class Crate {
         if (exist()) {
             Core.getCrates().getConfig().set("crates." + node.toLowerCase(), null);
             Core.getCrates().saveConfig();
+            crates.remove(this);
         }
     }
 

@@ -1,0 +1,11 @@
+name: MonthlyCrates
+version: 1.0.4
+main: com.shadebyte.monthlycrates.Core
+authors: [TheCrystalStar]
+description: A high quality Monthly Crates pluign.
+website: https://www.shadebyte.com/
+
+commands:
+  monthlycrates:
+    description: The main command for the plugin
+    aliases: [mcrate, monthlycrate, mcrates]
