@@ -1,0 +1,14 @@
+name: MonthlyCrates
+main: ca.tweetzy.monthlycrates.MonthlyCrates
+version: maven-version-number
+api-version: 1.13
+description: Monthly Crates is the simply a cosmic pvp replica.
+authors: [Kiran Hart]
+website: https://tweetzy.ca
+depend: [Vault]
+
+commands:
+  monthlycrates:
+    description: Main command for the monthly crate plugin
+    aliases: [monthlycrate, mcrates, mcrate]
+    usage: /monthlycrates
